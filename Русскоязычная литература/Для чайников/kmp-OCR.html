@@ -1,0 +1,805 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0053)http://lab314.brsu.by/kmp-lite/nlp/kmp/Theory/NLP.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1251"><title>kmp-OCR</title>
+
+<style>LI.MsoNormal {
+	FONT-SIZE: 12pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; margin-left:0cm; margin-right:0cm; margin-top:0cm; margin-bottom:0pt
+}
+</style>
+<style></style><link rel="stylesheet" type="text/css" href="chrome-extension://onbkopaoemachfglhlpomhbpofepfpom/styles.css"><link rel="stylesheet" type="text/css" href="chrome-extension://ldbfffpdfgghehkkckifnjhoncdgjkib/styles.css"></head>
+
+<body link="#FF0000" vlink="#FF0000" alink="#FF0000" bgcolor="#fdf7e8">
+
+<font face="verdana,Verdana" size="3">
+
+
+<div align="center">
+<center>
+&nbsp;<table style="BORDER-COLLAPSE: collapse" bordercolor="#111111" cellspacing="0" cellpadding="0" width="82%" border="0">
+  <tbody>
+  <tr>
+    <td width="97%">
+
+		
+
+<center>
+
+		
+
+<font face="Verdana" size="3">
+
+      </font><div align="center"><font face="Verdana" size="3">
+		<table border="1" width="100%" id="table3" background="./kmp-OCR_files/mosaic-orang.jpg" bgcolor="#800000" style="border-collapse: collapse; border-color: #800000; ">
+			<tbody><tr>
+				<td width="85%" style="border-bottom-style: none; border-bottom-width: medium">
+				<p class="MsoBodyTextIndent" style="margin:0 10px; text-align:center">
+<font size="6" color="#FFFFFF">Автоматическая обработка текста</font></p>
+				</td>
+			</tr>
+			</tbody></table>
+
+		</font>
+
+<font face="verdana,Verdana" size="3">
+
+		
+		
+
+<font size="3" color="#008000" style="font-size: 11pt">
+
+		</font><div align="center"><font size="3" color="#008000" style="font-size: 11pt">
+
+<font face="verdana,Verdana" size="3">
+
+      		
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+
+
+		
+		<p style="line-height: 150%; margin: 7px 9px">
+			
+			
+			
+	          
+	          &nbsp;</p></font></font></font><p style="line-height: 150%; margin: 7px 9px"><font size="3" color="#008000" style="font-size: 11pt"><font face="verdana,Verdana" size="3"><font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+			
+			
+			
+	          
+	          <font face="verdana,Verdana" size="3" color="#000080" style="font-size: 11pt">
+
+
+
+	          
+	          <script language="JavaScript">
+<!--
+dayarray=new Array("","","","","","","")
+montharray=new Array ("января","февраля","марта","апреля","мая","июня","июля","августа","сентября", 
+"октября","ноября","декабря")
+ndata=new Date();
+day=dayarray[ndata.getDay()];
+month=montharray[ndata.getMonth()];
+date=ndata.getDate();
+hours = ndata.getHours();
+mins = ndata.getMinutes();
+secs = ndata.getSeconds();
+if (hours < 10) {hours = "0" + hours }
+if (mins < 10) {mins = "0" + mins }
+if (secs < 10) {secs = "0" + secs }
+datastr=(""+ date +" "+ month +"  <br>"+ hours + ":" + mins )
+-->
+              </script>
+		  
+		</font>
+				  
+		    </font>
+		</font></font>
+
+<font face="verdana,Verdana" size="3">
+
+<font size="3" color="#000080" style="font-size: 11pt" face="verdana,Verdana">
+
+		    </font></font></p><p class="MsoNormal" align="center"><font face="verdana,Verdana" size="3"><font size="3" color="#000080" style="font-size: 11pt" face="verdana,Verdana">
+            <script language="JavaScript">document.write(datastr);</script>2 января  <br>18:57
+           </font></font></p><font face="verdana,Verdana" size="3">
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<p>&nbsp;</p>
+</font></b>
+
+		</font>
+
+		<font face="verdana,Verdana" size="3" style="font-size: 11pt">
+
+		<span style="font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232)">
+
+		<font face="Verdana" size="5" color="#CC0000">
+		<p>Дефиниции</p>
+		<p>&nbsp;</p>
+
+		</font>
+		</span>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<div align="center">
+			<table border="1" width="100%" id="table4" height="51" bgcolor="#FFFFFF" style="border-collapse: collapse; border-color: #C0C0C0; ">
+				<tbody><tr>
+					<td width="85%" height="50" style="border-bottom-style: none; border-bottom-width: medium">
+
+<font size="3" color="#000080" style="font-size: 11pt">
+
+            <p style="margin:7px 9px; line-height:150%" align="left">&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Обработка естественного языка (Natural 
+Language Processing, NLP) — общее направление искусственного интеллекта и 
+математической лингвистики. Оно изучает проблемы компьютерного анализа и синтеза 
+естественных языков. </span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+<font size="3" color="#000080" style="font-size: 11pt" face="verdana,Verdana">
+
+            Автоматическая обработка текста - преобразование текста на 
+искусственном или естественном языке с помощью компьютера.</font></b></font></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Основные задачи АОТ:</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Распознавание речи<br>
+Анализ текста<br>
+Извлечение информации<br>
+Информационный поиск<br>
+Анализ высказываний<br>
+Анализ тональности текста<br>
+Вопросно-ответные системы<br>
+Генерирование текста<br>
+Синтез речи<br>
+Задачи анализа и синтеза в комплексе</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Машинный перевод</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Автоматическое реферирование, аннотирование или упрощение текста</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+</font>
+<font size="3" color="#000080" style="font-size: 11pt; letter-spacing:normal" face="Verdana">
+	<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+				<span style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color:rgb(253, 247, 232)">
+					<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+					</span></font></b></font></td>
+				</tr>
+			</tbody></table></div>
+
+		</font>
+		</b>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" style="font-size: 11pt">
+
+		<span style="font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232)">
+
+		<font face="Verdana" size="5" color="#CC0000">
+		<p>&nbsp;</p>
+		<p>Понятие текста</p>
+		<p>&nbsp;</p>
+
+		</font>
+		</span>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<div align="center">
+			<table border="1" width="100%" id="table4" height="51" bgcolor="#FFFFFF" style="border-collapse: collapse; border-color: #C0C0C0; ">
+				<tbody><tr>
+					<td width="85%" height="50" style="border-bottom-style: none; border-bottom-width: medium">
+
+<font size="3" color="#000080" style="font-size: 11pt">
+
+            <p style="margin:7px 9px; line-height:150%" align="left">&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Обработка естественного языка (Natural 
+Language Processing, NLP) — общее направление искусственного интеллекта и 
+математической лингвистики. Оно изучает проблемы компьютерного анализа и синтеза 
+естественных языков. </span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+<font size="3" color="#000080" style="font-size: 11pt" face="verdana,Verdana">
+
+            Автоматическая обработка текста - преобразование текста на 
+искусственном или естественном языке с помощью компьютера.</font></b></font></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Основные задачи АОТ:</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Распознавание речи<br>
+Анализ текста<br>
+Извлечение информации<br>
+Информационный поиск<br>
+Анализ высказываний<br>
+Анализ тональности текста<br>
+Вопросно-ответные системы<br>
+Генерирование текста<br>
+Синтез речи<br>
+Задачи анализа и синтеза в комплексе</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Машинный перевод</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Автоматическое реферирование, аннотирование или упрощение текста</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+</font>
+<font size="3" color="#000080" style="font-size: 11pt; letter-spacing:normal" face="Verdana">
+	<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+				<span style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color:rgb(253, 247, 232)">
+					<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+					</span></font></b></font></td>
+				</tr>
+			</tbody></table></div>
+
+		</font>
+		</b>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" style="font-size: 11pt">
+
+		<span style="font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232)">
+
+		<font face="Verdana" size="5" color="#CC0000">
+		<p>&nbsp;</p>
+		<p>Обработка</p>
+		<p>&nbsp;</p>
+
+		</font>
+		</span>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<div align="center">
+			<table border="1" width="100%" id="table4" height="51" bgcolor="#FFFFFF" style="border-collapse: collapse; border-color: #C0C0C0; ">
+				<tbody><tr>
+					<td width="85%" height="50" style="border-bottom-style: none; border-bottom-width: medium">
+
+<font size="3" color="#000080" style="font-size: 11pt">
+
+            <p style="margin:7px 9px; line-height:150%" align="left">&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Обработка естественного языка (Natural 
+Language Processing, NLP) — общее направление искусственного интеллекта и 
+математической лингвистики. Оно изучает проблемы компьютерного анализа и синтеза 
+естественных языков. </span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+<font size="3" color="#000080" style="font-size: 11pt" face="verdana,Verdana">
+
+            Автоматическая обработка текста - преобразование текста на 
+искусственном или естественном языке с помощью компьютера.</font></b></font></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Основные задачи АОТ:</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Распознавание речи<br>
+Анализ текста<br>
+Извлечение информации<br>
+Информационный поиск<br>
+Анализ высказываний<br>
+Анализ тональности текста<br>
+Вопросно-ответные системы<br>
+Генерирование текста<br>
+Синтез речи<br>
+Задачи анализа и синтеза в комплексе</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Машинный перевод</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Автоматическое реферирование, аннотирование или упрощение текста</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+</font>
+<font size="3" color="#000080" style="font-size: 11pt; letter-spacing:normal" face="Verdana">
+	<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+				<span style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color:rgb(253, 247, 232)">
+					<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+					</span></font></b></font></td>
+				</tr>
+			</tbody></table></div>
+
+		</font>
+		</b>
+
+</font><font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<p>&nbsp;</p>
+</font></b>
+
+		</font>
+
+		<font face="verdana,Verdana" size="3" style="font-size: 11pt">
+
+		<span style="font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232)">
+
+		<font face="Verdana" size="5" color="#CC0000">
+		<p>Автоматичность</p>
+		<p>&nbsp;</p>
+
+		</font>
+		</span>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<div align="center">
+			<table border="1" width="100%" id="table4" height="51" bgcolor="#FFFFFF" style="border-collapse: collapse; border-color: #C0C0C0; ">
+				<tbody><tr>
+					<td width="85%" height="50" style="border-bottom-style: none; border-bottom-width: medium">
+
+<font size="3" color="#000080" style="font-size: 11pt">
+
+            <p style="margin:7px 9px; line-height:150%" align="left">&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Обработка естественного языка (Natural 
+Language Processing, NLP) — общее направление искусственного интеллекта и 
+математической лингвистики. Оно изучает проблемы компьютерного анализа и синтеза 
+естественных языков. </span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+<font size="3" color="#000080" style="font-size: 11pt" face="verdana,Verdana">
+
+            Автоматическая обработка текста - преобразование текста на 
+искусственном или естественном языке с помощью компьютера.</font></b></font></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Основные задачи АОТ:</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Распознавание речи<br>
+Анализ текста<br>
+Извлечение информации<br>
+Информационный поиск<br>
+Анализ высказываний<br>
+Анализ тональности текста<br>
+Вопросно-ответные системы<br>
+Генерирование текста<br>
+Синтез речи<br>
+Задачи анализа и синтеза в комплексе</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Машинный перевод</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Автоматическое реферирование, аннотирование или упрощение текста</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+</font>
+<font size="3" color="#000080" style="font-size: 11pt; letter-spacing:normal" face="Verdana">
+	<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+				<span style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color:rgb(253, 247, 232)">
+					<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+					</span></font></b></font></td>
+				</tr>
+			</tbody></table></div>
+
+		</font>
+		</b>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" style="font-size: 11pt">
+
+		<span style="font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232)">
+
+		<font face="Verdana" size="5" color="#CC0000">
+		<p>&nbsp;</p>
+		<p>Основные задачи АОТ</p>
+		<p>&nbsp;</p>
+
+		</font>
+		</span>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<div align="center">
+			<table border="1" width="100%" id="table4" height="51" bgcolor="#FFFFFF" style="border-collapse: collapse; border-color: #C0C0C0; ">
+				<tbody><tr>
+					<td width="85%" height="50" style="border-bottom-style: none; border-bottom-width: medium">
+
+<font size="3" color="#000080" style="font-size: 11pt">
+
+            <p style="margin:7px 9px; line-height:150%" align="left">
+Задачи обработки текстов&nbsp; можно разбить на две условные категории. </p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+К первой относятся задачи, с которыми ежедневно сталкивается любой пользователь: 
+проверка орфографии, фильтрация спама, автоматический перевод небольших 
+фрагментов текста (несколько предложений) и др. С точки зрения исследователей в 
+области автоматической обработки текстов (АОТ), все эти задачи почти решены, и 
+сегодня более актуальны задачи из второй категории, требующие обработки больших 
+текстовых массивов: нахождение релевантных ответов на вопросы (задачи 
+«вопрос-ответ»), полноценный машинный перевод целостных текстов, анализ мнений и 
+отзывов, конструирование рекомендательных систем, работающих с большими 
+массивами неструктурированных данных. </p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+Отличительная особенность таких задач — их сложность и отсутствие формализации, 
+приводящие к тому, что для них пока еще нет полноценного набора решений, а 
+применяются вспомогательные методы выделения ключевых слов и словосочетаний, 
+суммаризации (автоматического реферирования) текстов и классификации текстов. </p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+В этом ряду особое место занимают технологии визуализации больших объемов 
+текстовых данных.</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+Теоретическую основу автоматической обработки текстов составляет компьютерная 
+лингвистика, наиболее востребованы в которой методы машинного обучения, 
+статистического анализа, модели Маркова, логические модели и модификации этих 
+методов с учетом специфики Больших Данных [1]. Существует несколько подходов к 
+такой модификации: распараллеливание алгоритмов, применение методов снижения 
+размерности, предобработка данных, в ходе которой целостные тексты заменяются их 
+отдельными элементами. Несмотря на различие между национальными языками, 
+лингвистические методы могут быть универсальными — некоторые морфологические и 
+синтаксические модели удается использовать для анализа текстов как на 
+английском, так и на русском языке.<br>
+У компьютерной лингвистики и автоматической обработки текстов есть официальная 
+дата рождения — январь 1954 года, когда был проведен Джорджтаунский эксперимент, 
+в ходе которого машина перевела 60 простых предложений с русского на английский, 
+что было вполне в духе времени. Следующий виток развития пришелся на 60-е годы — 
+период эволюции идей искусственного интеллекта, и одной из ярких работ того 
+времени стала программа Eliza, которая вела психотерапевтические беседы с 
+пользователем, спрягая глаголы и манипулируя местоимениями. В 80-е годы 
+компьютерная лингвистика пережила некоторое затишье, после которого начался бум 
+корпусной лингвистики — исследований в области создания, поддержки и 
+использования текстовых корпусов (множество разнообразных текстов, посвященных 
+разным темам и написанных в различных жанрах и стилях). Появление компьютеров, 
+на которых можно было целиком хранить, обрабатывать корпусы, содержащие наборы 
+эталонных текстов, и проводить сложные вычисления, позволило активно 
+использовать статистические методы и методы машинного обучения для работы с 
+текстами [2]. В целом в начале 90-х годов в области компьютерной лингвистики 
+произошел переход к статистическим методам и, затем, методам машинного обучения 
+и анализа данных [3], которые применяют к уже написанным и существующим текстам.<br>
+В настоящее время в области автоматической обработки текстов в России 
+значительная часть работ посвящена переносу методов, разработанных для 
+английского языка, на русский, и, к сожалению, оригинальных разработок очень 
+мало.<br>
+Задачи компьютерной лингвистики<br>
+В сфере обработки текстов на сегодняшний день сформировалось два подхода: на 
+основе моделей языка и правил, составленных экспертами; на базе машинного 
+обучения. Первый позволяет достичь лучших результатов, однако составление 
+моделей и правил настолько трудоемкий процесс, что уступающие по качеству методы 
+машинного обучения практически его вытеснили. Повышение качества достигается не 
+за счет совершенствования математических методов, а за счет увеличения и 
+улучшения обучающей выборки. Оба подхода направлены сегодня на решение следующих 
+задач.<br>
+Анализ и градация мнений. Соотнесение текста, написанного от первого лица, с 
+дискретной шкалой оценок: плохо, хорошо, очень хорошо и т. д. Используется для 
+анализа отзывов в интернет-магазинах и высказываний в социальных сетях.<br>
+Анализ тональности высказываний. Выявление позитивного или негативного отношения 
+к обсуждаемому предмету. Используется для анализа отзывов, генерации диалога и 
+т. д.<br>
+Классификация текстов по темам. Отнесение текста к той или иной тематике. 
+Используется во многих приложениях — в частности, в рекомендательных системах, 
+для рубрикации текстов в онлайн-библиотеках и для организации новостных потоков.<br>
+Генерация речи. Используется в робототехнике, смартфонах, навигаторах.<br>
+Ведение диалога. Анализ реплик собеседника и формирование на их основе ответов. 
+Используется в робототехнике, экспертных системах — например, Королевский банк 
+Шотландии частично заменил контакт-центры роботами, поддерживающими диалог с 
+пользователем.<br>
+Проверка правописания. Используется в текстовых редакторах, поисковых системах.<br>
+Извлечение смысла из текста. Выделение ключевых слов и словосочетаний, трендов, 
+суммаризация. Применяется в новостных системах для агрегирования серии новостных 
+сообщений, базах знаний для организации хранения знаний и вывода новых фактов.<br>
+Поиск ответов на вопросы. Подборка по вопросу и, возможно, контексту наиболее 
+релевантного ответа. Применяется в поисковых и экспертных системах.<br>
+Машинный перевод.<br>
+Cистемы АОТ можно классифицировать по виду лицензирования (проприетарные — как 
+правило, принадлежащие известным производителям, и академические разработки — 
+распространяемые бесплатно); открытости (системы могут быть либо доступны только 
+узкому кругу людей, либо находиться в открытом доступе); целевой аудитории 
+(исследователи в области компьютерной лингвистики, разработчики, рядовые 
+пользователи и т. п., что определяет интерфейс системы); мультиязычности 
+(различие по числу поддерживаемых языков); характеру (готовые системы или 
+библиотеки инструментов обработки текстов); универсализму (решение конкретных 
+задач, обработка текстов в целом); используемым данным (тип и объемы 
+обрабатываемых данных); применяемым экспертным правилам и математическим 
+моделям; ориентации на конкретную прикладную область.<br>
+Мультиязычные системы часто более коммерчески привлекательны и просты в 
+использовании. В свою очередь, системы, ориентированные на конкретный язык или 
+подмножество языков, обеспечивают пусть и небольшой, но очень важный во многих 
+задачах прирост качества за счет учета специфики языка. Классический пример 
+мультиязычной системы — переводчик Google.<br>
+Системы, рассчитанные на достаточно широкое (и, как правило, коммерческое) 
+использование, обладают хорошо развитым интерфейсом для конечного пользователя 
+(например, Microsoft Bing Translator и Google translator, ОРФО, программа для 
+автоматического переключения между различными раскладками клавиатуры Punto 
+Switcher, различные утилиты «Яндекса» и т. д.). Ряд этих систем обладает также 
+своим собственным программным интерфейсом (ОРФО, Microsoft Bing Translator). Но 
+в данном случае он является скорее приятным дополнением, чем основным способом 
+использования систем. Напротив, для систем, рассчитанных только на 
+исследователей или являющихся составной частью более объемных проектов, 
+программный интерфейс становится главным (а часто и единственным) способом 
+взаимодействия. Интерфейсы для конечных пользователей в этих системах рассчитаны 
+скорее на работу в тестовом режиме и часто являются консольными. В качестве 
+примеров такого рода систем можно назвать mystem, AOT, pyMorphy 1 и 2, «Томита 
+парсер» [4], OpenXerox, Snowball. Почти все они предназначены для решения 
+конкретных задач, возникающих на различных этапах анализа текстов: выделения 
+слов из текста (токенизация), морфологического анализа (определения частей речи 
+и других грамматических характеристик), построения синтаксической структуры 
+предложений и т. д.<br>
+Корпусы — неотъемлемая часть многих систем обработки текстов. Каждое слово в 
+корпусах снабжено исчерпывающими грамматическими характеристиками: к какой части 
+речи оно принадлежит, в какой форме оно находится, какова его синтаксическая 
+роль. Корпусы служат входными данными для обучения в задачах классификации 
+текстов по темам и жанрам, для обучения синтаксических парсеров и программ, 
+используемых для снятия омонимии и разрешения анафоры. Параллельные корпусы, 
+состоящие из одинаковых текстов на разных языках, используют для обучения 
+машинных переводчиков. Как правило, корпусы собираются десятилетиями, и в их 
+создании участвуют большие исследовательские группы — например, проект 
+«Национальный корпус русского языка» существует уже 13 лет и поддерживается 
+компанией «Яндекс».<br>
+Важный тип входных данных любой системы АОТ — морфологические словари. Например, 
+библиотека «АОТ», используемая во многих исследовательских и коммерческих 
+проектах, представляет собой словарь Зализняка в цифровой форме. Тезаурусы (или 
+семантические сети) — другой тип широко востребованных входных данных. Пожалуй, 
+самый известный тезаурус — это WordNet, представляющий собой ресурс, в котором 
+слова связаны с помощью так называемых семантических отношений: синонимии, 
+гиперонимии (частное — обобщение), гипонимии (обобщение — частное), меронимии 
+(часть — целое) и др. WordNet полезен в задачах машинного перевода, генерации 
+текстов, классификации текстов. К сожалению, русского аналога WordNet пока нет.<br>
+Решение практически любой задачи АОТ так или иначе включает в себя проведение 
+анализа текста на нескольких уровнях представления.<br>
+Графематический анализ. Выделение из массива данных предложений и слов (токенов).<br>
+Морфологический анализ. Выделение грамматической основы слова, определение 
+частей речи, приведение слова к словарной форме.<br>
+Синтаксический анализ. Выявление синтаксических связей между словами в 
+предложении, построение синтаксической структуры предложения.<br>
+Семантический анализ.] Выявление семантических связей между словами и 
+синтаксическими группами, извлечение семантических отношений.<br>
+Каждый такой анализ — самостоятельная задача, не имеющая собственного 
+практического применения, но активно используемая для решения более общих задач. 
+Многие исследовательские системы предназначены для решения именно 
+вспомогательных задач. Такие системы применяются либо для апробации методов и 
+проведения вычислительных экспериментов, либо в качестве составных частей (или 
+библиотек) для систем, решающих ту или иную прикладную задачу. Примером таких 
+систем могут служить средство NLTK для графематического анализа и токенизации, 
+морфологический анализатор mystem и синтаксический парсер ЭТАП3.<br>
+Универсализм в АОТ подразумевает наличие в системе набора взаимосвязанных 
+методов и подходов. Существует два класса таких систем. К первому относятся 
+системы, разрабатываемые исследовательскими департаментами крупных компаний: IBM, 
+Intel, SAS, ABBYY, Microsoft, Xerox и т. д. В качестве примеров систем, 
+предназначенных для обработки текстов на английском языке, можно назвать IBM 
+Content Analytics, SAS Text Miner и IBM Watson. Ко второму классу относятся 
+открытые интегрированные программные пакеты, созданные в университетах и 
+представляющие собой множество методов и моделей, построенных на единой 
+программной и математической платформе. Для английского языка можно назвать 
+системы Apache OpenNLP, StanfordNLP, NLTK, GATE. Систем для работы с русским 
+языком, претендующих на универсализм, пока нет, более того, в случае русского 
+языка отсутствуют даже доступные для конечного пользователя системы, решающие 
+основные лингвистические задачи: выделение ключевых слов, классификация текстов 
+по темам, определение тональности текстов. В таблице перечислены программные 
+системы, работающие с русским языком.<br>
+Некоторые системы АОТ направлены на анализ текстов определенных жанров или 
+тематики. Например, система Watson применяется в медицине для диагностирования и 
+облегчения процедуры принятия врачами решений. Рекомендательная система 
+новостных сообщений News360 представляет собой приложение для мобильных 
+устройств, с помощью которого пользователь может читать и выбирать наиболее 
+интересную для него информацию. На основе предпочтений пользователя система 
+предлагает новые статьи, собранные с разных новостных порталов и отвечающие 
+конкретной тематике. В некоторых случаях эти системы умеют определять 
+тональность новостного сообщения — например, пользователь может просматривать 
+только хорошие новости и исключить из своей ленты все плохие. Рекомендательные 
+системы, работающие с текстовыми данными, особенно востребованы в 
+интернет-магазинах. С точки зрения АОТ отзыв пользователя интернет-магазина — 
+это текст, имеющий явную тональную окраску и посвященный конкретному предмету. 
+По отзыву пользователя необходимо определить, остался ли он доволен купленным 
+товаром или нет, а если ему что-то не понравилось, то понять, что именно. Кроме 
+того, перед интернет-магазинами встает задача выявления поддельных отзывов, 
+написанных производителем товара. Создателям специализированных систем анализа 
+отзывов приходится идти на компромисс — если специализация системы слишком узкая 
+(например, она нацелена только на тексты про мультиварки), то ее невозможно 
+будет использовать для анализа текстов другой специализации (косметика).</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Основные задачи АОТ:</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Распознавание речи<br>
+Анализ текста<br>
+Извлечение информации<br>
+Информационный поиск<br>
+Анализ высказываний<br>
+Анализ тональности текста<br>
+Вопросно-ответные системы<br>
+Генерирование текста<br>
+Синтез речи<br>
+Задачи анализа и синтеза в комплексе</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Машинный перевод</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Автоматическое реферирование, аннотирование или упрощение текста</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+</font>
+<font size="3" color="#000080" style="font-size: 11pt; letter-spacing:normal" face="Verdana">
+	<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+				<span style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color:rgb(253, 247, 232)">
+					<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+					</span></font></b></font></td>
+				</tr>
+			</tbody></table></div>
+
+		</font>
+		</b>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" style="font-size: 11pt">
+
+		<span style="font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232)">
+
+		<font face="Verdana" size="5" color="#CC0000">
+		<p>&nbsp;</p>
+		<p>Основные методы АОТ</p>
+		<p>&nbsp;</p>
+
+		</font>
+		</span>
+
+</font>
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<div align="center">
+			<table border="1" width="100%" id="table4" height="51" bgcolor="#FFFFFF" style="border-collapse: collapse; border-color: #C0C0C0; ">
+				<tbody><tr>
+					<td width="85%" height="50" style="border-bottom-style: none; border-bottom-width: medium">
+
+<font size="3" color="#000080" style="font-size: 11pt">
+
+            <p style="margin:7px 9px; line-height:150%" align="left">&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF"><br>
+Задачи анализа и синтеза в комплексе</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Машинный перевод</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+<span style="background-color: #FFFFFF">Автоматическое реферирование, аннотирование или упрощение текста</span></p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+<p style="margin:7px 9px; line-height:150%" align="left">
+&nbsp;</p>
+</font>
+<font size="3" color="#000080" style="font-size: 11pt; letter-spacing:normal" face="Verdana">
+	<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+				<span style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color:rgb(253, 247, 232)">
+					<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+<p class="MsoNormal" style="margin: 7px" align="left">
+					&nbsp;</p>
+					</span></font></b></font></td>
+				</tr>
+			</tbody></table></div>
+
+		</font>
+		</b>
+
+</font><font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+</font></b>
+
+		</font>
+
+		<font face="Verdana" size="3" color="#008000" style="font-size: 11pt; ">
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+
+		<p>&nbsp;</p>
+		</b>
+</font><b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<p>&nbsp;</p>
+		</font></b></font></font></div><font face="verdana,Verdana" size="3"><font face="Verdana" size="3" color="#008000" style="font-size: 11pt; "><b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); "><font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+	</font></b></font></font></font></div><font face="verdana,Verdana" size="3"><font face="verdana,Verdana" size="3"><font face="Verdana" size="3" color="#008000" style="font-size: 11pt; "><b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); "><font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+</font></b></font>
+
+		<font face="verdana,Verdana" size="3" style="font-size: 11pt">
+
+		<span style="font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232)">
+		<font face="verdana,Verdana" size="3" color="#000080" style="font-size: 11pt">
+<p class="MsoNormal" style="margin: 7px" align="right">
+
+					kmp</p>
+
+		<font face="verdana,Verdana" size="3" color="#008000" style="font-size: 11pt">
+
+		<b style="color: rgb(0, 128, 0); font-family: verdana, Verdana; font-size: 15px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22px; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(253, 247, 232); ">
+		<font face="verdana,Verdana" size="3">
+<p class="MsoNormal" style="margin: 7px" align="center">&nbsp;</p>
+
+</font>
+
+		</b></font></font></span></font></font></font></center></td></tr></tbody></table></center></div></font><div class="mallbery-caa" style="z-index: 2147483647 !important; text-transform: none !important; position: fixed;"></div><div class="mallbery-caa" style="z-index: 2147483647 !important; text-transform: none !important; position: fixed;"></div></body></html>

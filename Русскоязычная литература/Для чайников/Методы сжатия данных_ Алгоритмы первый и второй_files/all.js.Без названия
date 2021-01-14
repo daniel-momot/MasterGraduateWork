@@ -1,0 +1,15 @@
+var jqueryMain = $.noConflict(true);
+jqueryMain(document).ready(function(){
+	jqueryMain('#content table').not('.no-scroll').wrap('<div class="scrollable"></div>');
+	var onImageReady = function(image, cb) {
+		jqueryMain('<img/>').attr('src', image).on('load', function() {
+		   jqueryMain(this).remove(); // prevent memory leaks as @benweet suggested
+		   cb();
+		});
+	}
+	onImageReady('/images/menu-ok.svg', function() {
+		onImageReady('/images/menu-fill.svg', function() {
+			jqueryMain('body').addClass('menu-images-ready');
+		})
+	});
+});

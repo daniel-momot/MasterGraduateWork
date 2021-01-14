@@ -1,0 +1,1488 @@
+
+<!-- saved from url=(0069)http://compression.ru/download/articles/classif/intro.html#tthFtNtAAB -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1251"><title>Методы сжатия данных: Алгоритмы первый и второй</title><script type="text/javascript" async="" src="./Методы сжатия данных_ Алгоритмы первый и второй_files/analytics.js.Без названия"></script><script type="text/javascript" async="" src="https://d31j93rd8oukbv.cloudfront.net/metrika/watch_ua.js"></script><script async="" src="./Методы сжатия данных_ Алгоритмы первый и второй_files/gtm.js.Без названия"></script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NLMKK23');</script><meta name="keywords" content="архиватор,компрессор,сжатие,книга,статья,кодек,аудио,видео,сравнение,архивация,кодирование,теория информации,фрактал,вейвлет,Хаффмен,Лемпел-Зив,арифметическое кодирование,pkzip,rar,winrar,ace,winace,ha,eri,bmf,ybs,7-zip,uharc,ppmd,ppmonstr,ppmn,arj,gzip,ha,acb,rk,zip,arc,lzh,lha,bzip,bzip2,pdf,RLE,Lempel-Ziv,LZ,LZW,LZ77,arithmetic,coding,transform,pack,context modeling,sources,download,benchmark,BWT,Burrows-Wheeler Transform,MTF,distance coding,PPM,Prediction by Partial Matching,LPC,Linear Prediction Coding,ADPCM,audio,video,image,JPEG,MPEG,MP3,wavelet,jpg,png,gif,DCT,Discrete Cosine Transform,subband coding,quantization,fractal,CTW,SPIHT,LOCO,JPEG-LS,EZW"><link href="./Методы сжатия данных_ Алгоритмы первый и второй_files/css" rel="stylesheet"><link rel="apple-touch-icon" sizes="57x57" href="http://compression.ru/favicon/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="http://compression.ru/favicon/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="http://compression.ru/favicon/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="http://compression.ru/favicon/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="http://compression.ru/favicon/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="http://compression.ru/favicon/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="http://compression.ru/favicon/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="http://compression.ru/favicon/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="http://compression.ru/favicon/apple-touch-icon-180x180.png"><link rel="icon" type="image/png" href="http://compression.ru/favicon/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="http://compression.ru/favicon/favicon-194x194.png" sizes="194x194"><link rel="icon" type="image/png" href="http://compression.ru/favicon/favicon-96x96.png" sizes="96x96"><link rel="icon" type="image/png" href="http://compression.ru/favicon/android-chrome-192x192.png" sizes="192x192"><link rel="icon" type="image/png" href="http://compression.ru/favicon/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="http://compression.ru/favicon/manifest.json"><link rel="mask-icon" href="http://compression.ru/favicon/safari-pinned-tab.svg" color="#5bbad5"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-TileImage" content="/favicon/mstile-144x144.png"><meta name="theme-color" content="#ffffff"><meta name="HandheldFriendly" content="true"><meta name="MobileOptimized" content="320"><meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no"><script src="./Методы сжатия данных_ Алгоритмы первый и второй_files/jquery.min.js.Без названия"></script><style></style><script src="./Методы сжатия данных_ Алгоритмы первый и второй_files/all.js.Без названия"></script><link href="./Методы сжатия данных_ Алгоритмы первый и второй_files/all.css" rel="stylesheet" type="text/css"><link href="./Методы сжатия данных_ Алгоритмы первый и второй_files/lang_ru.css" rel="stylesheet" type="text/css"><link rel="stylesheet" type="text/css" href="chrome-extension://onbkopaoemachfglhlpomhbpofepfpom/styles.css"><link rel="stylesheet" type="text/css" href="chrome-extension://ldbfffpdfgghehkkckifnjhoncdgjkib/styles.css"></head>
+<!-- Google Tag Manager -->
+
+<!-- End Google Tag Manager -->
+
+
+<!--<link href="//fonts.googleapis.com/css?family=Arimo&display=swap" rel="stylesheet">-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+<!--[if IE]>
+   <link rel="stylesheet" type="text/css" href="/css/ie.css" />
+<![endif]-->
+
+<body text="#000000" bgcolor="#E9E9E9" background="./Методы сжатия данных_ Алгоритмы первый и второй_files/m_backgrnd.gif" class="menu-images-ready">
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NLMKK23"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter42270449 = new Ya.Metrika({
+                    id:42270449,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true,
+                    trackHash:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://d31j93rd8oukbv.cloudfront.net/metrika/watch_ua.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/42270449" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+ 	<div id="wrapper-top">
+		<div id="head">
+			<div id="logo"><a href="http://compression.ru/"><img src="./Методы сжатия данных_ Алгоритмы первый и второй_files/logo.png" width="82" height="81" alt=""></a></div>
+			<h1>Всё о сжатии данных, изображений и видео</h1>
+			<div id="lang">
+				<img src="./Методы сжатия данных_ Алгоритмы первый и второй_files/ru.png" width="30" height="15" alt="Ru"> 
+				<a href="http://compression.ru/index_en.htm">
+					<img src="./Методы сжатия данных_ Алгоритмы первый и второй_files/en.png" width="30" height="15" alt="En">
+				</a>
+			</div>
+		</div>
+
+		<input type="checkbox" role="button" id="menuToggle" name="menuToggle">
+		<label for="menuToggle" id="menuMask"></label>
+		
+		<label for="menuToggle" id="menuControl">Меню</label>
+
+ 		<div id="wrapper-middle">
+
+		<div id="leftcol" class="menucol flagedlinks">
+			<div>
+				<h1>
+	<a href="http://compression.ru/video/index_ru.htm" class="only-ru">Видео</a>
+	<a href="http://compression.ru/video/" class="only-en">Video</a>
+</h1>
+<h2>
+	<a href="http://compression.ru/video/3d_video_ru.htm" class="only-ru">3D-видео</a>
+	<a href="http://compression.ru/video/3d_video.htm" class="only-en">3D video</a>
+</h2>
+<ul class="second-level">
+	<li><a href="http://compression.ru/video/vqmt3d" class="link-en">
+		<span class="only-ru">VQMT3D</span>
+		<span class="only-en">S3D quality</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/vqmt3d/report9/" class="link-en">
+		<span class="only-ru">Отчет 9 (105 фильмов)</span>
+		<span class="only-en">Report 9 (105 movies)</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/vqmt3d/report8/" class="link-en">
+		<span class="only-ru">Отчет 8 (5 метрик &amp; 25 фильмов)</span>
+		<span class="only-en">Report 8 (5 metrics &amp; 25 movies)</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/vqmt3d/report7/" class="link-en">
+		<span class="only-ru">Отчет 7 (stereo-window &amp; 10 фильмов)</span>
+		<span class="only-en">Report 7 (stereo-window &amp; 10 movies)</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/vqmt3d/report6/" class="link-en">
+		<span class="only-ru">Отчет 6 (stereo-window &amp; 10 фильмов)</span>
+		<span class="only-en">Report 6 (stereo-window &amp; 10 movies)</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/vqmt3d/report5/" class="link-en">
+		<span class="only-ru">Отчет 5 (6 метрик &amp; 5 фильмов)</span>
+		<span class="only-en">Report 5 (6 metrics &amp; 5 movies)</span>
+	</a></li>
+</ul>
+
+<h2>
+	<a href="http://compression.ru/video/codec_comparison/index.html" class="only-ru">Сравнения кодеков</a>
+	<a href="http://compression.ru/video/codec_comparison/index_en.html" class="only-en">Video Codecs Comparisons</a>
+</h2>
+<ul class="first-level">
+	<li><a href="http://compression.ru/video/codec_comparison/hevc_2020/" class="link-en">HEVC/AV1 2020</a></li>
+	<li><a href="http://compression.ru/video/codec_comparison/cloud_2020/" class="link-en">Cloud 2020</a></li>
+	<li><a href="http://compression.ru/video/codec_comparison/cloud_2019/" class="link-en">Cloud 2019</a></li>
+	<li><a href="http://compression.ru/video/codec_comparison/hevc_2019/" class="link-en">HEVC/AV1 2019</a></li>
+	<li><a href="http://compression.ru/video/codec_comparison/hevc_2018/" class="link-en">HEVC/AV1 2018</a></li>
+	<li><a href="http://compression.ru/video/codec_comparison/hevc_2017/" class="link-en">HEVC/AV1 2017</a></li>
+</ul>
+
+<h2><a href="http://compression.ru/video/quality_measure/video_measurement_tool.html" class="link-en">Video Quality Measurement Tool (MSU VQMT)</a></h2>
+<ul class="first-level">
+	<li><a href="http://compression.ru/video/quality_measure/vqmt_download.html#free" class="link-en">
+		<span class="only-ru">Скачать бесплатно</span>
+		<span class="only-en">Download Free</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/quality_measure/vqmt_download.html#purchase" class="link-en">
+		<span class="only-ru">Купить PRO</span>
+		<span class="only-en">Purchase PRO</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/quality_measure/info.html#start" class="link-en">
+		<span class="only-ru">Информация о метриках</span>
+		<span class="only-en">Metrics' info</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/quality_measure/vqmt_why_update.html" class="link-en">
+		<span class="only-ru">Обновление</span>
+		<span class="only-en">Why upgrade?</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/quality_measure/vqmt_manual.html#start" class="link-en">
+		<span class="only-ru">Скриншоты</span>
+		<span class="only-en">Settings &amp; Screenshots</span>
+	</a></li>
+	<li><a href="http://compression.ru/video/quality_measure/perceptual_video_quality_tool.html" class="link-en">Perceptual Video Quality Tool (MSU PVQT)</a></li>
+</ul>
+
+<h1 class="only-ru">Проекты</h1>
+<h1 class="only-en">Projects</h1>
+<ul class="first-level">
+	<li><a href="http://compression.ru/video/video_codec_optimization/" class="link-en">Video-Based Codec Optimization</a></li>
+	<li><a href="http://compression.ru/video/savam/" class="link-en">
+		<span class="only-en">Semiautomatic Visual-Attention Modeling</span>
+		<span class="only-ru">Полуавтоматическая модель внимания и база записей движения глаз</span>
+	</a></li>
+	<li><a href="http://videomatting.com/" class="link-en" target="_blank">Video Matting</a></li>
+	<li><a href="http://videocompletion.org/" class="link-en" target="_blank">Video Completion</a></li>
+	<li>
+		<a href="http://compression.ru/video/public_filters.htm" class="only-en">Public filters</a>
+		<a href="http://compression.ru/video/public_filters_ru.htm" class="only-ru">Общедоступные видеофильтры</a>
+	</li>
+	<li>
+		<a href="http://compression.ru/video/filters.htm" class="only-en">Com. filters</a>
+		<a href="http://compression.ru/video/filters_ru.htm" class="only-ru">Коммерческие видеофильтры</a>
+	</li>
+	<li>
+		<a href="http://compression.ru/video/video_codecs.htm" class="only-en">Our Video Codecs</a>
+		<a href="http://compression.ru/video/video_codecs_ru.htm" class="only-ru">Проекты по видеокодекам</a>
+	</li>
+	<li><a href="https://globalcompetition.compression.ru/" class="link-en" target="_blank">Global Data Compression Competition</a></li>
+</ul>
+
+<h1 class="only-ru"><a href="http://compression.ru/download/articles/classif/book">Книга «Методы сжатия данных»</a></h1>
+
+<h1 class="only-ru">Разделы</h1>
+<ul class="first-level only-ru">
+	<li><a href="http://compression.ru/download">Cтатьи</a></li>
+	<li><a href="http://compression.ru/arctest">Arctest</a></li>
+	<li><a href="http://compression.ru/fido">Ru.compress</a></li>
+	<li><a href="http://compression.ru/video/other_ru.htm">Разное</a></li>
+	<!--<li><a href="http://forum.compression.ru/">Форум</a></li> форум всё -->
+</ul>
+
+<h1>
+	<a href="http://compression.ru/about/index_en.html" class="only-en">About</a>
+	<a href="http://compression.ru/about" class="only-ru">О сервере</a>
+</h1>
+
+			</div>
+
+			<div id="rightcolinleft">
+				<h1>Новости:</h1>
+
+<ul class="site-news">
+<li><span class="news-date">08.12.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2020/fpga_express_report.html" class="link-en" target="_blank">
+    <span class="only-en">Released report on FPGA&amp;HW-accelerated video encoders</span>
+    <span class="only-ru">Выпущен отчет о сравнении FPGA&amp;HW-accelerated видеокодеков</span>
+</a></li>
+<li><span class="news-date">07.12.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2020/main_report.html" class="link-en" target="_blank">
+    <span class="only-en">MSU Video Codecs Comparison 2020 (Part 1, FullHD) report released!</span>
+    <span class="only-ru">Выпущен отчет о сравнении видеокодеков-2020 (часть 1, FullHD)</span>
+</a></li>
+<li><span class="news-date">17.06.20</span> <a href="https://globalcompetition.compression.ru/" class="link-en" target="_blank">
+    <span class="only-en">Global Data Compression Competition: Call for lossless compressors. Win up to 50,000 EUR!</span>
+    <span class="only-ru">Конкурс по сжатию без потерь с призовым фондом 50,000 EUR</span>
+</a></li>
+<li><span class="news-date">15.04.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2020/call_for_codecs.html" class="link-en">
+    <span class="only-en">Call-for-codecs 2020: participate in annual video-codecs comparison!</span>
+    <span class="only-ru">Прием заявок на участие в ежегодном сравнении видеокодеков 2020</span>
+</a></li>
+<li><span class="news-date">30.03.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2019/#hq_report_summary" class="link-en">
+    <span class="only-en">High-quality encoding report on new codecs (aom, rav1e, SVT, etc.) released</span>
+    <span class="only-ru">Выпущен отчет о сравнении видеокодеков (aom, rav1e, SVT, etc.) в режиме кодирования высокого качества</span>
+</a></li>
+<li><span class="news-date">20.03.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2019/#4k_report_summary" class="link-en">
+    <span class="only-en">4K content encoding report released</span>
+    <span class="only-ru">Выпущен отчет о сравнении видеокодеков на 4K контенте</span>
+</a></li>
+<li><span class="news-date">01.02.20</span> <a href="http://compression.ru/video/codec_comparison/cloud_2020" class="link-en">
+    <span class="only-en">Cloud Video Encoding Benchmark 2020 has started</span>
+    <span class="only-ru">Начато сравнение облачных сервисов кодирования видео 2020</span>
+</a></li>
+<li><span class="news-date">22.12.19</span> <a href="http://compression.ru/video/codec_comparison/cloud_2019" class="link-en">
+    <span class="only-en">Report on 2019 cloud video encoding services comparison is released</span>
+    <span class="only-ru">Выпущен отчёт о сравнении облачных сервисов кодирования видео 2019</span>
+</a></li>
+<li><span class="news-date">22.10.19</span> <a href="http://compression.ru/video/codec_comparison/cloud_2019" class="link-en">
+    <span class="only-en">Cloud transcoding services comparison report released</span>
+    <span class="only-ru">Выпущен отчет о сравнении облачных сервисов сжатия видео</span>
+</a></li>
+<li><span class="news-date">22.10.19</span> <a href="http://compression.ru/video/codec_comparison/hevc_2019" class="link-en">
+    <span class="only-en">Released FullHD and subjective reports on 2019 HEVC/AV1 video-codec comparison</span>
+    <span class="only-ru">Выпущены FullHD и субъективный отчеты о сравнении HEVC/AV1 кодеков 2019</span>
+</a></li>
+<li><span class="news-date">07.11.19</span> <a href="http://compression.ru/video/quality_measure/video_measurement_tool.html" class="link-en">
+    <span class="only-en">Released VQMT 12.0 and BETA VQMT 11.2</span>
+    <span class="only-ru">Выпущены VQMT 12.0 и VQMT 11.2</span>
+</a></li>
+<li><span class="news-date">30.05.19</span> <a href="http://compression.ru/video/quality_measure/video_measurement_tool.html" class="link-en">
+    <span class="only-en">VQMT 11.1 released</span>
+    <span class="only-ru">Выпущен VQMT 11.1</span>
+</a></li>
+<li><span class="news-date">01.02.19</span> <a href="http://compression.ru/video/codec_comparison/call_for_codecs_19.html" class="link-en">
+    <span class="only-en">Call for codecs: apply for 2019 MSU video codecs comparison</span>
+    <span class="only-ru">Прием заявок на участие в сравнении видеокодеков 2019 открыт</span>
+</a></li>
+<li><span class="news-date">04.09.18</span> <a href="http://compression.ru/video/codec_comparison/hevc_2018#hq_report" class="link-en">
+    <span class="only-en">HEVC and AV1 high quality codecs comparison report released</span>
+    <span class="only-ru">Выпущен отчет о сравнении HEVC кодеков и AV1 2018</span>
+</a></li>
+<li><span class="news-date">24.01.17</span> <a href="http://compression.ru/video/vqmt3d/report9/" class="link-en">
+    <span class="only-en">Report 9 on 3D-video Quality Analysis released</span>
+    <span class="only-ru">Выпущен девятый отчёт с оценкой качества 3D-фильмов</span>
+</a></li>
+<li class="only-ru"><span class="news-date">11.05.15</span> <a href="http://compression.ru/video/vqmt3d/geektimes/" class="link-ru">
+    <span>Опубликована серия статей «Почему от 3D болит голова»</span>
+</a></li>
+<li><span class="news-date">14.12.14</span> <a href="http://compression.ru/video/savam/" class="link-en">
+    <span class="only-en">Semiautomatic Visual-Attention Model released</span>
+    <span class="only-ru">Опубликована полуавтоматическая модель внимания и база записей движения глаз</span>
+</a></li>
+<li><span class="news-date">25.07.14</span> <a href="https://videomatting.com/" class="link-en">
+    <span class="only-en">The public objective benchmark for video-matting methods released</span>
+    <span class="only-ru">Выпущен открытый объективный бенчмарк по отделению полупрозрачных объектов от фона</span>
+</a></li>
+</ul>
+			</div>
+		</div>
+<!-- ========================================================== MENU END ================== -->
+
+<!-- ========================================== RIGHTCOL BEGIN ==================== -->
+		<div id="rightcol" class="menucol flagedlinks">
+			<div>
+				<h1>Новости:</h1>
+
+<ul class="site-news">
+<li><span class="news-date">08.12.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2020/fpga_express_report.html" class="link-en" target="_blank">
+    <span class="only-en">Released report on FPGA&amp;HW-accelerated video encoders</span>
+    <span class="only-ru">Выпущен отчет о сравнении FPGA&amp;HW-accelerated видеокодеков</span>
+</a></li>
+<li><span class="news-date">07.12.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2020/main_report.html" class="link-en" target="_blank">
+    <span class="only-en">MSU Video Codecs Comparison 2020 (Part 1, FullHD) report released!</span>
+    <span class="only-ru">Выпущен отчет о сравнении видеокодеков-2020 (часть 1, FullHD)</span>
+</a></li>
+<li><span class="news-date">17.06.20</span> <a href="https://globalcompetition.compression.ru/" class="link-en" target="_blank">
+    <span class="only-en">Global Data Compression Competition: Call for lossless compressors. Win up to 50,000 EUR!</span>
+    <span class="only-ru">Конкурс по сжатию без потерь с призовым фондом 50,000 EUR</span>
+</a></li>
+<li><span class="news-date">15.04.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2020/call_for_codecs.html" class="link-en">
+    <span class="only-en">Call-for-codecs 2020: participate in annual video-codecs comparison!</span>
+    <span class="only-ru">Прием заявок на участие в ежегодном сравнении видеокодеков 2020</span>
+</a></li>
+<li><span class="news-date">30.03.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2019/#hq_report_summary" class="link-en">
+    <span class="only-en">High-quality encoding report on new codecs (aom, rav1e, SVT, etc.) released</span>
+    <span class="only-ru">Выпущен отчет о сравнении видеокодеков (aom, rav1e, SVT, etc.) в режиме кодирования высокого качества</span>
+</a></li>
+<li><span class="news-date">20.03.20</span> <a href="http://compression.ru/video/codec_comparison/hevc_2019/#4k_report_summary" class="link-en">
+    <span class="only-en">4K content encoding report released</span>
+    <span class="only-ru">Выпущен отчет о сравнении видеокодеков на 4K контенте</span>
+</a></li>
+<li><span class="news-date">01.02.20</span> <a href="http://compression.ru/video/codec_comparison/cloud_2020" class="link-en">
+    <span class="only-en">Cloud Video Encoding Benchmark 2020 has started</span>
+    <span class="only-ru">Начато сравнение облачных сервисов кодирования видео 2020</span>
+</a></li>
+<li><span class="news-date">22.12.19</span> <a href="http://compression.ru/video/codec_comparison/cloud_2019" class="link-en">
+    <span class="only-en">Report on 2019 cloud video encoding services comparison is released</span>
+    <span class="only-ru">Выпущен отчёт о сравнении облачных сервисов кодирования видео 2019</span>
+</a></li>
+<li><span class="news-date">22.10.19</span> <a href="http://compression.ru/video/codec_comparison/cloud_2019" class="link-en">
+    <span class="only-en">Cloud transcoding services comparison report released</span>
+    <span class="only-ru">Выпущен отчет о сравнении облачных сервисов сжатия видео</span>
+</a></li>
+<li><span class="news-date">22.10.19</span> <a href="http://compression.ru/video/codec_comparison/hevc_2019" class="link-en">
+    <span class="only-en">Released FullHD and subjective reports on 2019 HEVC/AV1 video-codec comparison</span>
+    <span class="only-ru">Выпущены FullHD и субъективный отчеты о сравнении HEVC/AV1 кодеков 2019</span>
+</a></li>
+<li><span class="news-date">07.11.19</span> <a href="http://compression.ru/video/quality_measure/video_measurement_tool.html" class="link-en">
+    <span class="only-en">Released VQMT 12.0 and BETA VQMT 11.2</span>
+    <span class="only-ru">Выпущены VQMT 12.0 и VQMT 11.2</span>
+</a></li>
+<li><span class="news-date">30.05.19</span> <a href="http://compression.ru/video/quality_measure/video_measurement_tool.html" class="link-en">
+    <span class="only-en">VQMT 11.1 released</span>
+    <span class="only-ru">Выпущен VQMT 11.1</span>
+</a></li>
+<li><span class="news-date">01.02.19</span> <a href="http://compression.ru/video/codec_comparison/call_for_codecs_19.html" class="link-en">
+    <span class="only-en">Call for codecs: apply for 2019 MSU video codecs comparison</span>
+    <span class="only-ru">Прием заявок на участие в сравнении видеокодеков 2019 открыт</span>
+</a></li>
+<li><span class="news-date">04.09.18</span> <a href="http://compression.ru/video/codec_comparison/hevc_2018#hq_report" class="link-en">
+    <span class="only-en">HEVC and AV1 high quality codecs comparison report released</span>
+    <span class="only-ru">Выпущен отчет о сравнении HEVC кодеков и AV1 2018</span>
+</a></li>
+<li><span class="news-date">24.01.17</span> <a href="http://compression.ru/video/vqmt3d/report9/" class="link-en">
+    <span class="only-en">Report 9 on 3D-video Quality Analysis released</span>
+    <span class="only-ru">Выпущен девятый отчёт с оценкой качества 3D-фильмов</span>
+</a></li>
+<li class="only-ru"><span class="news-date">11.05.15</span> <a href="http://compression.ru/video/vqmt3d/geektimes/" class="link-ru">
+    <span>Опубликована серия статей «Почему от 3D болит голова»</span>
+</a></li>
+<li><span class="news-date">14.12.14</span> <a href="http://compression.ru/video/savam/" class="link-en">
+    <span class="only-en">Semiautomatic Visual-Attention Model released</span>
+    <span class="only-ru">Опубликована полуавтоматическая модель внимания и база записей движения глаз</span>
+</a></li>
+<li><span class="news-date">25.07.14</span> <a href="https://videomatting.com/" class="link-en">
+    <span class="only-en">The public objective benchmark for video-matting methods released</span>
+    <span class="only-ru">Выпущен открытый объективный бенчмарк по отделению полупрозрачных объектов от фона</span>
+</a></li>
+</ul>
+			</div>
+		</div>
+<!-- ========================================================== RIGHTCOL END ================== -->
+
+		<div id="content">
+
+<b><a href="http://compression.ru/download/articles/classif/index.html">Классификация и разметка</a>&gt;&gt;</b>[<a href="http://compression.ru/download/articles/classif/intro.html">Введение</a>|<a href="http://compression.ru/download/articles/classif/bwi.html">Проект БВИ</a>]
+
+
+
+ 
+
+                    
+
+
+<p>
+   
+<title> Классификация и разметка текстов с использованием методов сжатия
+  данных. Краткое введение\footnote{которое получилось не совсем кратким}</title>
+    
+</p><h1 align="center">Классификация и разметка текстов с использованием методов сжатия
+  данных. Краткое введение<a href="http://compression.ru/download/articles/classif/intro.html#tthFtNtAAB" name="tthFrefAAB"><sup>1</sup></a> </h1>
+
+<h3 align="center">Д.В.Хмелёв </h3>
+
+
+<p>
+
+</p><h1>Содержание </h1>
+<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc1">1&nbsp; Введение</a><br>
+<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2">2&nbsp; Классификация</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2.1">2.1&nbsp; О классификации мышей</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2.2">2.2&nbsp; О классификации текстов: обзор других методов</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2.3">2.3&nbsp; Энтропийная классификация (с помощью сжатия)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2.4">2.4&nbsp; Открытые вопросы</a><br>
+<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc3">3&nbsp; Автоматическая разметка</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc3.1">3.1&nbsp; Краткое описание</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc3.2">3.2&nbsp; Открытые вопросы и задачи</a><br>
+ 
+
+<p>
+ </p><h2><a name="tth_sEc1">
+1</a>&nbsp;&nbsp;Введение</h2>
+Современные методы позволяют вплотную приблизиться к теоретической
+верхней границе на степень сжатия текстов. Естественная верхняя
+граница для текстов определяется <em>энтропией</em> и замечательные
+эксперименты Шеннона&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#shannon:1948" name="CITEshannon:1948">1</a>], некоторых наших математиков
+под руководством Колмогорова&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#Kolmogorov" name="CITEKolmogorov">2</a>] (см.
+также&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#brown:1992" name="CITEbrown:1992">3</a>]) показывают, что энтропия естественно-языковых
+текстов находитcя между 1-2 битами на букву как для русского, так и
+для английского текстов, что, в принципе, и достигается современными
+программами, особенно на основе метода PPM.
+
+<p>
+Такие блестящие достижения открывают новые перспективы в решении задач
+анализа естествнно-языковых текстов, которые ранее требовали
+значительного вклада человеческого труда. Речь идёт о задачах,
+связанных с извлечением некоторой структурированной информации из
+текста, а именно об автоматической <em>классификации</em> текстов и об
+их автоматической <em>разметке</em>.
+
+</p><p>
+Почему решение этих задач является актуальным? Классификация текстов
+по их содержанию является ежедневной необходимостью любого человека,
+пользующегося электронной почтой: до сих пор не существует адекватной
+системы борьбы со спамом. Автоматическая классификация текстов на
+новостных лентах (по областям), автоматический тематический
+классификатор в сетевых библиотеках сильно облегчил бы жизнь людям,
+поддерживающим эти сервисы. Количество файлов, хранящихся на типичном
+компьютере, также стремительно увеличивается и у этих громадных
+коллекций также скоро возникнет необходимость в самоорганизации. Даже
+этот узкоспециализированный сервер, посвящённый сжатию, требует
+обширной работы по классификации имеющегося материала. Любой большой
+современный проект, связанный со взаимодействием большого количества
+людей (вроде Русской Фантастики <a href="http://www.rusf.ru/"><tt>http://www.rusf.ru</tt></a>, Самиздата
+<a href="http://zhurnal.lib.ru/"><tt>http://zhurnal.lib.ru</tt></a>), приводит к тому, что объёмы данных
+становятся настолько необъятными, что просто не поддаются анализу и
+классификации вручную. Есть мнение, что методы сжатия и специалисты в
+них, имеющие большой опыт в анализе данных общей природы, могут
+поспособствовать выявлению различных ошибок и несовместимостей в этих
+гигантских текстовых базах данных.
+
+</p><p>
+Автоматическая разметка текста является, пожалуй, ещё более
+актуальной, чем классификаторы. Несмотря на то, что имеется большое
+количество способов разметки информации (HTML, <span class="roman">L</span><sup><span class="roman">A</span></sup><span class="roman">T</span><sub><span class="roman">E</span></sub><span class="roman">X</span>, <tt>nroff</tt>,
+DOC-файлы разных версий MS Word, PDF, разметка файлов электронной
+почты, внутренняя разметка большинства источников новостей, библиотек
+и т.п.), на практике единственным устойчивым к различным
+преобразованиям способом хранения текста является простейший текстовый
+формат, в котором строки из символов ASCII (или его расширения)
+разделяются специальными символами (перевода строки). В большинстве сетевых
+библиотек (например, в библиотеке Мошкова <a href="http://www.lib.ru/"><tt>http://www.lib.ru</tt></a>) текст
+хранится именно в таком формате, что приводит к большому количеству
+проблем при дальнейшей обработке этого материала. Например, не так
+легко написать программу, обеспечивающую форматирование текста
+<em>полиграфического (или близкого к полиграфическому) качества</em>
+(например, в <span class="roman">L</span><sup><span class="roman">A</span></sup><span class="roman">T</span><sub><span class="roman">E</span></sub><span class="roman">X</span>), пригодное для его дальнейшего вывода на печать.
+Конечно, нетребовательные люди могут ограничиться
+распечаткой текста, выровненного по правой границе в 70 символов, но
+такие тексты занимают на печати значительно больше места, да и к
+комфортному чтению они практически непригодны (эти обстоятельства в
+значительной мере обуславливают отсутствие возражений издателей к
+размещению книг в сети ;). Написание такой программы является одной из
+целей настоящего проекта. Понятно, что совсем избежать человеческого
+труда не удастся, однако мы можем достичь его значительной экономии
+следующим образом. Предположим, что кто-нибудь разметил текст метками
+вроде «начало параграфа», «стихотворение», «эпиграф» и т.п.
+Тогда тексты <em>того же типа</em> скорее всего следует размечать
+аналогичным образом. В разделе&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#s:markup">3</a> мы обсудим, как разметку
+«по аналогии» можно строить с использованием принципа минимизации
+длины результирующего сжатого текста.  Для определения же типа текста
+можно воспользоваться классификатором текста, описанном в следующем
+разделе&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#s:classify">2</a>.
+
+</p><p>
+Итак, <em>разметка и классификация текстов могут выполняться с
+  использованием алгоритмов сжатия</em>.  В то время как дальнейшее
+принципиальное (скажем, в полтора раза) улучшение коэффициента сжатия
+является весьма проблематичным и требует весьма глубокого
+проникновения в область и понимания большого количества уже
+разработанных методов, автоматическая разметка и классификация текстов
+являются новым рубежом знания, на котором вполне возможно достигнуть
+значительных успехов с довольно небольшим «порогом вхождения», т.е.
+багаж знаний и умений, требующихся для созидания чего-то нового
+важного и полезного в этой области, относительно невелик.
+
+</p><p>
+Необходимое замечание: это введение следует рассматривать как
+предварительное. Автор заранее просит прощения за пропущенные ссылки и
+ждёт значимых дополнений от читателей.
+
+</p><p>
+ </p><h2><a name="tth_sEc2">
+2</a>&nbsp;&nbsp;Классификация</h2>
+<a name="s:classify">
+</a>
+
+     <h3><a name="tth_sEc2.1">
+2.1</a>&nbsp;&nbsp;О классификации мышей</h3>
+Под классификацией каких-либо объектов имеется ввиду сопоставление
+каждому объекту метки или признака (или набора меток или признаков).
+Например, мыши бывают белыми, серыми, чёрными, синими или зелёными (мы
+говорим, конечно, о компьютерных мышах и имеем ввиду только чисто
+белых и т.д. мышей без смешанных цветов;), всякая мышь - это объект,
+цвет мыши - это её признак или метка. Ясно, что метки могут быть
+взаимоисключающими (вроде цвета мыши), или дополняющими, как например,
+метки «оптическая», «бесхвостая», «с колёсиком», которые могут
+появляться в любых комбинациях. Знание о том, что какие-либо метки
+несовместны, может быть нетривиальным в использовании и поэтому обычно
+решают задачи классификации только двух видов:
+<em>многокатегориальные</em> и <em>многоальтернативные</em>. В рамках
+многокатегориальных задач считается, что все признаки являются
+дополняющими друг друга, то есть, возможна «синяя белая зелёная
+оптическая бесхвостая» мышь. В многоальтернативных задачах все метки
+являются взаимоисключающими, то есть, если мышь «синяя», то она не
+может быть «зелёной». Важным случаем многоальтернативной задачи
+является задача <em>бинарной</em> классификации, когда имеется ровно два
+взаимоисключающих признака, например, признак и его дополнение, вроде
+пары признаков «оптическая» и «неоптическая».
+
+<p>
+Всякая многокатегориальная задача сводится к нескольким задачам
+бинарной классификации, когда для каждого признака определяется его
+наличие или отсутствие. Например, при классификации мышей по типу
+позиционирования и типу соединения с компьютером, решается две
+бинарных задачи: «оптическая/неоптическая» и
+«хвостатая/безхвостая». В принципе, многоальтернативную задачу тоже
+можно свести к задачам <em>бинарной</em> классификации: например, при
+классификации цвета можно определять для каждого цвета его наличие или
+отсутствие. Однако, такой подход может привести к ошибочным
+комбинациям типа «белая зелёная синяя», а потому такое сведение чаще
+всего неэффективно. В большинстве случаев классификацию по нескольким
+признакам можно свести к нескольким задачам бинарной и
+многоальтернативной классификации. Например, для классификации мышей
+по цвету, типу позиционирования и типу соединения с компьютером, мы
+используем многоальтернативный классификатор по цвету
+«белая/серая/чёрная/синяя/зелёная» и бинарные классификаторы по
+признакам «оптическая/неоптическая» и «хвостатая/безхвостая». Во
+избежание терминологической путаницы отметим, что
+<em>классификатором</em> мы называем какую-нибудь реализацию алгоритма,
+умеющую производить классификацию по какому-нибудь описанию объекта
+(просто иногда классификатором называют набор названий классов
+объектов; впрочем если кто помнит биологию, имеется классификатор
+растений, который представляет собой набор карточек, позволяющий по
+внешним характеристикам растения определить его вид, в точности по
+нашему определению).
+
+</p><p>
+Существует много разных <em>методов</em> классификации, причём имеется
+довольно чёткое деление методов на два класса по наличию или
+отсутствию частичной разметки исследуемых данных. В
+<em>классификации с предварительным обучением</em> некоторая доля
+текстов считается заранее размеченной (например, вручную) интересующей
+нас информацией. Например, имеется каталог «Белые мыши» с
+несколькими фотографиями белых мышей, каталог «Синие мыши» с
+несколькими фотографиями синих мышей и т.д. А задача состоит в том,
+чтобы правильно разложить по этим каталогам мышей из каталога
+«Неизвестные мыши».. <em>Классификация без обучения</em> наличия таких
+данных не предполагает. То есть, имеется только каталог «Неизвестные
+мыши», которых надо как-то сгруппировать, например, по близости
+цвета. Смысл заключается в том, чтобы человек, взглянув впоследствии на
+получившиеся группы, мог легко расставить метки: «Белые мыши»,
+«Зелёные мыши» и т.д.
+
+</p><p>
+Ясно, что решение задач без обучения существенно сложнее классификации
+с предварительным обучением. Очень часто задача классификации без
+обучения плохо поставлена, то есть группировка данных производится на
+основании некоторого априорного критерия, который к данным в
+действительности никакого отношения не имеет. Довольно часто
+классификация без обучения является NP-полной задачей. Иногда,
+однако, данные сгруппировать как-то надо, и поэтому применяются
+эвристики (интересный пример применения классификации без обучения к
+сжатию текстов - полуадаптивный алгоритм Хаффмана, применяемый в
+Bzip2 для сжатия MTF-рангов&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#compress-methods:2002" name="CITEcompress-methods:2002">4</a>,Глава 5, с.207]).
+Чаще же всего выход из создавшейся ситуации состоит в сведении задачи
+к классификации с обучением, поскольку усилия на подготовку
+<em>качественной</em> обучающей выборки несопостовимо малы по сравнению
+с трудностью решения NP-полной задачи, и умственными усилиями по
+изготовлению хорошей эвристики. Если не оговорено противное, в
+дальнейшем мы будем под классификацией иметь ввиду именно
+классификацию с предварительным обучением, а заинтересованный
+классификацией без обучения читатель отсылается к диплому
+Н.Тапера&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#Thaper:2001" name="CITEThaper:2001">5</a>].
+
+</p><p>
+     </p><h3><a name="tth_sEc2.2">
+2.2</a>&nbsp;&nbsp;О классификации текстов: обзор других методов</h3>
+Если мы хотим поручить классификацию объектов машине, то обычно первым
+шагом является описание имеющихся объектов путём выделения и
+количественной характеризиции <em>легко измеримых признаков</em>
+(например, получение цифровой фотографии мыши при современном уровне
+развития техники труда не представляет). Лёгкость получения цифровой
+фотографии мышки не означает, что легко написать программу, которая
+будет помещать файлы с белыми мышами в каталог с белыми мышами, и
+файлы с зелёными мышами в каталог с зелёными мышами: ведь с точки
+зрения машины фотография представляет собой просто гигантский
+прямоугольный массив чисел, характеризующих цвет и его интенсивность в
+каждом пикселе (элементе изображения). Заключение о том, что эти числа
+задают белую мышь (считая, что компьютеру известно, что на фотографии
+изображена именно мышь) является нетривиальной задачей искуственного
+интеллекта (ИИ), при том, что обычный человек легко с этой задачей
+справляется.
+
+<p>
+<b>Упражнение.</b> Определите цвет мыши на следующем рисунке.
+
+
+</p><center>
+
+  <img src="./Методы сжатия данных_ Алгоритмы первый и второй_files/catoncomputerwithmouse.gif" width="250" height="265">
+
+</center>
+
+
+<p>
+<b>Упражнение<sup>*</sup>.</b> Придумайте какой-нибудь метод установления
+цвета мыши исходя из шестнадцатиричного дампа данных, задающих этот
+рисунок (дамп целиком приведён в <a href="http://compression.ru/download/articles/classif/catoncomputerwithmouse.txt"><tt>catoncomputerwithmouse.txt</tt></a>): 
+
+</p><pre>0000000 4947 3846 6139 00fa 0109 00d5 ff00 ffff
+0000020 f7f7 f7ff f7f7 efef e1ef e1e1 caf3 d7e9
+...............................................
+
+</pre>
+
+<p>
+Следует понимать, что с точки зрения машины любой текст - это такой же
+бессмысленный шестнадцатеричный дамп (впрочем, скорее двоичный, но из
+экономии места мы приводим его шестнадцатеричное представление):
+
+</p><pre>0000000 ccf3 c4c5 c5d5 20d4 cfd0 c9ce c1cd d8d4
+0000020 202c d4de 20cf 20d3 cfd4 cbde 20c9 d2da
+0000040 cec5 d1c9 cd20 dbc1 cec9 20d9 c0cc cfc2
+0000060 20ca c5d4 d3cb 20d4 2d2d 202d d4dc 20cf
+0000100 c1d4 cfcb 20ca c5d6 c20a d3c5 cdd3 d3d9
+0000120 c5cc cece cad9 db20 d3c5 ced4 c4c1 c1c3
+0000140 c5d4 c9d2 cede cad9 c420 cdc1 3ad0 000a
+
+</pre>
+
+<p>
+То есть, текст тоже характеризуется набором чисел, и числа эти целые.
+Как правило, они изменяются от 0 до 255, и каждому числу соответствует
+какая-нибудь буква или символ.<a href="http://compression.ru/download/articles/classif/intro.html#tthFtNtAAC" name="tthFrefAAC"><sup>2</sup></a>
+
+</p><p>
+Поскольку текст - это тоже некоторый объект, задаваемый числами, то
+задачи классификации делятся на те же два типа: многокатегориальный и
+многоальтернативный. В дальнейшем мы будем использовать слово
+<em>документ</em> как синоним слова <em>текст</em>. В случае
+многокатегориальной классификации каждому документу (тексту)
+назначается несколько меток из заранее определённого набора (вроде,
+«о корпорациях», «о деньгах», «о жизни» и т.д.), а задача
+классификации - определить эти метки автоматически с максимальной
+точностью. Для решения таких задач обычно строятся <em>бинарные</em>
+классификаторы, по одному на каждую возможную метку. Бинарный
+классификатор пытается определить, обладает ли поданный на вход
+документ данной меткой или нет.
+
+</p><p>
+В случае многоальтернативных задач требуется определить класс
+документа из конечного числа наперёд заданных (multiclass
+categorization). То есть, каждому документу может соответствовать
+<em>только одна</em> метка из заранее определённого множества возможных
+(в качестве примера можно рассмотреть задачу определения анонимного
+текста, при наличии текстов нескольких претендентов, один из которых
+заведомо является автором анонимного текста). В случае выбора из двух
+классов задача классификации становится бинарной. Таким образом, два
+типа задач тесно связаны, но они определённо не эквивалентны.
+
+</p><p>
+Простейший подход к классификации текстов: по ключевым словам. Скажем,
+наличие слова «аранк» тесно связано с романом С.Лукьяненко
+«<a href="http://www.rusf.ru/lukian/books/spektr/spektr.htm">Спектр</a>».
+Было бы опрометчиво, однако, делать вывод о том, что текст со словом
+«аранк» есть роман С.Лукьяненко, поскольку, например, текст, который
+вы сейчас читаете, тоже содержит это слово, так же как и
+многочисленные
+<a href="http://www.rusf.ru/lukian/recen/index.htm">рецензии</a>. Хорошо,
+тогда можно посчитать, сколько раз это слово встретилось в тексте, и
+большое количество употреблений слова аранк, скажем, больше ста, уж
+точно характеризует роман С.Лукьяненко. Но и это не гарантирует
+точного определения авторства, скажем, фрагмента из книги. Тем не
+менее, мы находимся на верном пути, поскольку качество классификатора,
+считающего количество «аранков» в тексте, выше, чем просто у
+классификатора, который ориентируется лишь на то, встретился «аранк»
+или нет. С другой стороны, почему мы концентрируемся на слове
+«аранк»? Ведь существует немало других хороших слов. И
+действительно, качество классификации существенно увеличивается, если 
+мы посчитем частоты <em>всех</em> слов в тексте. Правда, тогда наш текст
+будет характеризоваться очень-очень длинным массивом чисел. Но сначала
+уточним задачу. 
+
+</p><p>
+Пусть мы, например, желаем сопоставить документам тему. Например, жанр
+(ведь, произведения бывают смешанных жанров). Один из широко
+применяемых выходов - построить бинарный классификатор. Все
+документы (тексты), включая обучающую часть выборки, разворачиваются в
+очень большой вектор, индексируемый словами. После этого имеется два
+множества точек из обучающей выборки в очень многомерном пространстве,
+A (принадлежащие жанру) и B (не принадлежащие жанру). Для того, чтобы
+разделить эти множества, мы должны поделить пространство на две части.
+Простейший способ этого добиться - построить гиперплоскость
+(гиперплоскость - плоскость в пространстве, размерность которой на
+единицу меньше размерности самого пространства). Доказано, что в очень
+большом количестве случаев наилучшим разделителем является именно
+гиперплоскость. Выбор разделяющих гиперплоскостей по заданным
+множествам может быть неоднозначен, но существует ровно одна, в
+некотором отношении оптимальная гиперплоскость. Такую гиперплоскость
+можно построить с помощью вектора поддерживающих векторов (SVM). После
+этого для классификации текста с неизвестным жанром достаточно просто
+проверить, в какую часть пространства он попал.
+
+</p><p>
+Коэффициенты, задающие нормаль гиперплоскости, как раз и характеризуют
+вклад (т.е.) важность слова в различении классов.
+
+</p><p>
+Теперь то же на пальцах. Вообразим, что мы пользуемься только двумя
+словами: «думать» и «стрелять». Тогда все документы представляются
+точкой (x,y) на двумерной плоскости, где x - количество
+употреблений слова «думать», а y - количество употреблений
+«стрелять». Тогда, скажем, в детективах «думать» будет
+превалировать над «стрелять» (x &gt; y), а в «стрелялках»
+«стрелять» будут больше, чем «думать» (x &lt; y). А чтобы их
+различать, следует, например, провести прямую x=y (прямая - это и есть
+гиперплоскость в двумерном пространстве). Часто существуют и другие
+прямые, разделяющие множество детективов от множества «стрелялок».
+Выбор разделяющей прямой неоднозначен, но существует некое «наилучшее
+положение». Его можно подыскать с помощью решения задачи квадратичной
+оптимизации. Имеются готовые программы, которые это делают.  Такой
+программе надо на вход подать вектора из обучающей выборки (с
+разделением на присутствие и отсутствие в классе, которое традиционно
+задаётся 1 для присутствия и -1 для отуствия). Тогда 
+программа строит разделяющую гиперплоскость, которую записывает в файл.
+После этого ей можно подать на вход вектора, полученные из документов,
+подлежащих классификации - и вперёд!  Сама программа есть по адресу
+<a href="http://svmlight.joachims.org/"><tt>http://svmlight.joachims.org/</tt></a>. 
+
+</p><p>
+Хотя разделение векторов с помощью плоскости представляется довольно
+наивным, методы классификации с помощью SVM значительно превосходят
+многочисленных конкурентов: кластерную классификацию (когда документ
+соотносится к ближайшему множеству; в зависимости от определения
+расстояния до <em>множества</em> имееся большое количество вариантов
+этого метода - средневзвешенный, k ближайших соседей и т.п), а также
+наивную Байесовскую классификацию (которая предполагает, что частоты
+слов в тексте являются независимыми случайными величинами). 
+
+</p><p>
+Методы классификации с помощью SVM достигают хорошей точности за счёт
+извлечения и настройки на «особенности» текста, за которые они
+обычно принимают слова. Текст, однако, не исчерпывается словами: в нём
+обычно имеются знаки препинания, переводы строк и прочие форматирующие
+команды. Кроме того, деление на слова довольно-таки условно и не
+однозначно. Например, считать ли числа словами? Во избежание таких
+вопросов было бы идеально рассмотреть в качестве «особенностей»
+текста все его возможные подстроки. Проблема заключается в том, что
+количество особенностей возрастает быстрее, чем линейно, что делает
+применимость SVM проблематичной. Имеются различные трюки, позволяющие
+бороться с ростом размерности пространства, но их описание выходит за
+рамки настоящего обзора.
+
+</p><p>
+Прежде чем мы перейдём к описанию энтропийного подхода к
+классификации, ещё несколько комментариев об SVM. Методы классификации
+с помощью SVM играют в методах теории извлечения информации
+(Information Retrival) приблизительно ту же роль, что методы PPM
+играют в методах сжатия. В принципе, почти любой метод классификации
+(включая рассмотренные в следующем подпункте энтропийные методы) можно
+свести к построению разделяющей гиперплоскости с помощью SVM, точно
+также, как всегда можно настроить PPM, чтобы он давал лучшие или
+сравнимые результаты по сравнению с другими методами сжатия.  Проблема
+заключается в том, что SVM должна решать задачи квадратичного
+выпуклого программирования, что требует больших расходов времени и
+неизбежного использования арифметики с плавающей запятой. Сведение же
+задач к SVM может привести к увеличению размерности задачи
+(пространства признаков). Конечно, методы оптимизации всё время
+улучшаются, но до сих пор SVM способна решать задачи на десятки тысяч
+характеристик. Если учесть, что разных слов в русском языке больше ста
+тысяч, и достаточно объёмная коллекция русских текстов (вроде
+Библиотеки Мошкова <a href="http://www.lib.ru/"><tt>http://www.lib.ru</tt></a>) таких словарных объёмов
+достигает, то применимость SVM к классификации и обработке
+действительно больших объёмов текстов выглядит проблематичной (если не
+ограничиваться каким-нибудь подмножеством слов, что уменьшает качество
+классификации).  Другая сложность с использованием SVM -
+необходимость <em>предварительной обработки данных</em>, что зачастую
+затруднено, в частности, как выделять слова в китайских текстах? Даже
+не говоря о китайских текстах, что делать с русскими текстами в
+«Fido'шной» кодировке, в которых русская Н («эн») заменена на
+английскую H («аш»)
+(см.&nbsp;<a href="http://www.rusf.ru/books/yo/encoding.html"><tt>http://www.rusf.ru/books/yo/encoding.html</tt></a>)? Очевидно, к
+этим текстам необходимо применять предварительную обработку, в
+частности методами восстановления разметки, рассмотренным в
+разделе&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#s:markup">3</a>. Между тем на работу энтропийных методов,
+рассмотренных в следующем подпункте, такая замена практически не влияет
+(если только она была произведена во всех файлах).
+
+</p><p>
+     </p><h3><a name="tth_sEc2.3">
+2.3</a>&nbsp;&nbsp;Энтропийная классификация (с помощью сжатия)</h3>
+
+<p>
+Следующий метод классификации текстов очень просто формулируется и
+может использоваться совместно с любым из известных методов
+сжатия. Его существенное преимущество по сравнению с методами
+предыдущего подпункта состоит в <em>отсутствии предварительной обработки
+текста</em>. Грубо говоря, в качестве объекта, характеризующего текст,
+используется сам текст. 
+
+</p><p>
+Вкратце, суть метода состоит в том, чтобы «подклеивать» анонимный
+текст к текстам, характеризующим классы, и смотреть, насколько хорошо
+сжимается эта «добавка». Правильный исходный класс документа - это
+тот, на котором он жмётся лучше всего. В рамках подхода PPM правильный
+исходный класс документа - это тот, на чьей модели получается наилучшее
+сжатие. 
+
+</p><p>
+Будем рассматривать задачу многоальтернативной классификации текста
+T относительно текстов, S<sub>1</sub>, ..., S<sub>n</sub>, характеризующих n
+классов. Конечно, имеется много работ по адаптации SVM к решению этой
+задачи. Однако, весьма конкурентноспособным (и иногда побивающим SVM)
+является подход, основанный на применении так называемой
+<em>относительной энтропии</em>. Именно, мы определяем характеристику
+H(T<font face="symbol">|</font>S), которая характеризует энтропию текста T по отношению к
+тексту S. Далее выбор источника текста T при наличии текстов
+S<sub>1</sub>, ..., S<sub>n</sub>, представляющих n источников, должен
+осуществляться согласно оценке
+
+</p><p>
+<a name="e:theta">
+</a>
+<br clear="all"><div class="scrollable"><table border="0" width="100%"><tbody><tr><td>
+<div class="scrollable"><table align="center"><tbody><tr><td nowrap="nowrap" align="center">
+  <font face="symbol">q</font>(T)=<span class="roman">argmin</span><sub>i</sub>H(T<font face="symbol">|</font>S<sub>i</sub>).</td></tr></tbody></table></div>
+</td><td width="1%">(1)</td></tr></tbody></table></div>
+
+
+Приемлемое значение для H(T<font face="symbol">|</font>S<sub>i</sub>) можно получить с помощью программ
+сжатия текстов. Имеется совсем наивный способ, который предлагается
+называть «шельфовым» (off-the-shelf) алгоритмом, применимый при
+всяком отсутствии у вас навыков программирования.  Именно, сожмите
+вашим любимым компрессором текст S<sub>i</sub> и измерьте длину в байтах
+C(S<sub>i</sub>) получившегося архива с помощью средств вашей любимой
+операционной системы. Теперь создайте текст S<sub>i</sub>T, склеив тексты
+S<sub>i</sub> и T в один файл (в системах типа ДОС с помощью команды
+<tt>copy /b s4.txt+text.txt s4text.txt</tt>; или в вашем любимом
+редакторе <em>текстов</em><a href="http://compression.ru/download/articles/classif/intro.html#tthFtNtAAD" name="tthFrefAAD"><sup>3</sup></a>;
+можно также воспользоваться функцией
+<a href="http://www.rarlabs.com/">Far</a> копирования текстов с дополнением).
+Сожмите S<sub>i</sub>T и измерьте длину полученного сжатого текста C(S<sub>i</sub>T) в
+байтах. Всё! Теперь полагаем
+
+<br clear="all"><div class="scrollable"><table border="0" width="100%"><tbody><tr><td>
+<div class="scrollable"><table align="center"><tbody><tr><td nowrap="nowrap" align="center">
+H<sub>C</sub>(T<font face="symbol">|</font>S<sub>i</sub>)=</td><td nowrap="nowrap" align="center">
+&nbsp;1
+<div class="hrcomp"><hr noshade="noshade" size="1"></div>|T|<br></td><td nowrap="nowrap" align="center">
+(C(S<sub>i</sub>T)<font face="symbol">-</font>C(T)),</td></tr></tbody></table></div>
+</td></tr></tbody></table></div>
+
+
+где |T| - длина текста T в байтах. Полученное число
+H<sub>C</sub>(T<font face="symbol">|</font>S<sub>i</sub>) можно использовать совместно в оценке&nbsp;(<a href="http://compression.ru/download/articles/classif/intro.html#e:theta">1</a>)
+вместо H(T<font face="symbol">|</font>S<sub>i</sub>). Таким образом, для определения источника T мы
+вычисляем H<sub>C</sub>(T<font face="symbol">|</font>S<sub>i</sub>), а потом определяем истинный источник T,
+выбирая то i, которое соответствует минимальному из чисел
+H<sub>C</sub>(T<font face="symbol">|</font>S<sub>i</sub>). Насколько известно автору, первое опубликованное
+исследование о применимости шельфового алгоритма к классификации
+текстов имеется в приложении к статье&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#Kukush:2001" name="CITEKukush:2001">6</a>]. Любопытно,
+что некоторые архиваторы, а в особенности RAR (использующий PPMd)
+показывают прекрасные результаты, сравнимые и даже превосходящие
+другие результаты других подходов в этой области.
+
+</p><p>
+Другой подход - непосредственное измерение энтропии текста T с
+использованием модели для текста S. Наиболее подходящим в этом
+случае является PPM, в котором моделирование текста и его
+статистическое кодирование разбиты на два разных этапа
+(см.&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#compress-methods:2002" name="CITEcompress-methods:2002">4</a>]).
+Эксперименты&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#teahan:2001" name="CITEteahan:2001">7</a>,<a href="http://compression.ru/download/articles/classif/intro.html#Kukush:2001" name="CITEKukush:2001">6</a>] показывают, что такой
+подход вполне подходит для классификации, а в исследование,
+проведённое в работе&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#khmelev:2003a" name="CITEkhmelev:2003a">8</a>] показывает, что
+результаты практически совпадают с результатами шельфового алгоритма с
+использованием RAR 3.0 (который использует PPMD для сжатия).
+
+</p><p>
+Третий подход - использование <em>индекса повторяемости</em>, впервые
+описанного в работе&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#khmelev:2003" name="CITEkhmelev:2003">11</a>]. Индекс повторяемости
+R(T<font face="symbol">|</font>T<sub>1</sub>,<font face="symbol">ј</font>,T<sub>m</sub>) текста T относительно текстов T<sub>1</sub>, ...,
+T<sub>m</sub> - это нормированная на <font face="symbol">|</font>T<font face="symbol">|</font>(<font face="symbol">|</font>T<font face="symbol">|</font>+1) сумма длин всех подстрок
+T, повторённых где-нибудь в T<sub>1</sub>, ..., T<sub>m</sub>:
+<a name="e:R^2">
+</a>
+<br clear="all"><div class="scrollable"><table border="0" width="100%"><tbody><tr><td>
+<div class="scrollable"><table align="center"><tbody><tr><td nowrap="nowrap" align="center">
+  R<sup>2</sup>(T | T<sub>1</sub>,<font face="symbol">ј</font>T<sub>m</sub>)=</td><td nowrap="nowrap" align="center">
+&nbsp;2
+<div class="hrcomp"><hr noshade="noshade" size="1"></div>l(l+1)<br></td><td nowrap="nowrap" align="center">
+</td><td nowrap="nowrap" align="center">
+<font size="-1">l</font><!--sup
+--><br><font size="+3"><font face="symbol">е<br>
+</font></font><font size="-1">i=1</font>&nbsp;<br></td><td nowrap="nowrap" align="center">
+Q(T[i..l] | T<sub>1</sub>,<font face="symbol">ј</font>T<sub>m</sub>),</td></tr></tbody></table></div>
+</td><td width="1%">(2)</td></tr></tbody></table></div>
+
+
+где l=|T| - длина текста T, T[i..l] - i-тый суффикс
+документа T и Q(S | T<sub>1</sub>,<font face="symbol">ј</font>T<sub>m</sub>) - длина самого длинного
+префикса текста U, повторённого где-нибудь в T<sub>1</sub>, ..., T<sub>m</sub>.
+Например, если m=2,
+
+</p><center>
+T=«<tt>cat sat on</tt>» и<br>
+T<sub>1</sub>=«<tt>the cat on a mat</tt>»,<br>
+T<sub>2</sub>=«<tt>the cat sat</tt>»,
+</center>
+то
+<a name="e:R^2_example">
+</a>
+<br clear="all"><div class="scrollable"><table border="0" width="100%"><tbody><tr><td>
+<div class="scrollable"><table align="center"><tbody><tr><td nowrap="nowrap" align="center">
+  R<sup>2</sup>(T | T<sub>1</sub>,T<sub>2</sub>)=</td><td nowrap="nowrap" align="center">
+&nbsp;2
+<div class="hrcomp"><hr noshade="noshade" size="1"></div>10&#215;(10+1)<br></td><td nowrap="nowrap" align="center">
+</td><td align="left" class="cl"><font face="symbol">
+ж<br>и
+</font></td><td nowrap="nowrap" align="center">
+(7+6+5+4+3)+(5+4+3+2+1)</td><td align="left" class="cl"><font face="symbol">
+ц<br>ш
+</font></td><td nowrap="nowrap" align="center">
+ <font face="symbol">»</font> 0.727272</td></tr></tbody></table></div>
+</td><td width="1%">(3)</td></tr></tbody></table></div>
+
+
+и
+
+<br clear="all"><div class="scrollable"><table border="0" width="100%"><tbody><tr><td>
+<div class="scrollable"><table align="center"><tbody><tr><td nowrap="nowrap" align="center">
+R(T | T<sub>1</sub>,T<sub>2</sub>)=</td><td align="left" class="cl"><br><font face="symbol"><font size="+2">Ц</font><br></font>
+<div class="comb">&nbsp;</div>
+</td><td nowrap="nowrap" align="center">
+
+<div class="hrcomp"><hr noshade="noshade" size="1"></div>
+<div class="norm">R<sup>2</sup>(T | T<sub>1</sub>,T<sub>2</sub>)<br></div>
+<div class="comb">&nbsp;</div>
+</td><td nowrap="nowrap" align="center">
+ <font face="symbol">»</font> 0.852802.</td></tr></tbody></table></div>
+</td></tr></tbody></table></div>
+
+
+
+<p>
+Очевидно, мы можем использовать
+<a name="e:thetaR">
+</a>
+<br clear="all"><div class="scrollable"><table border="0" width="100%"><tbody><tr><td>
+<div class="scrollable"><table align="center"><tbody><tr><td nowrap="nowrap" align="center">
+  <font face="symbol">q</font><sub>R</sub>(T)=<span class="roman">argax</span><sub>i</sub>R(T<font face="symbol">|</font>S<sub>i</sub>).</td></tr></tbody></table></div>
+</td><td width="1%">(4)</td></tr></tbody></table></div>
+
+
+
+</p><p>
+Сравнение качества определения авторства при трёх разных подходах
+приведено в следующей таблице&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:classification_performance">1</a>.
+
+</p><p>
+<a name="tth_tAb1">
+</a> </p><center>Таблица 1: Точность классификации (процент верного определения автора
+  документа) на подвыборках с разной степенью повторяемости</center>
+<a name="t:classification_performance">
+</a>
+
+<div class="scrollable"><table>
+<tbody><tr><td>Метод                   </td><td>R &lt; 0.25 </td><td>R &lt; 0.5 </td><td>R &lt; 0.75 </td><td>R &lt; 1.00 </td><td>R&lt;=1.0</td></tr>
+<tr><td>R-index                 </td><td>82.1 </td><td>86.4 </td><td>87.1 </td><td>87.8 </td><td>89.0 </td></tr>
+<tr><td>SVM                     </td><td>80.6 </td><td>83.4 </td><td>83.5 </td><td>84.6 </td><td>85.0 </td></tr>
+<tr><td>Bzip                    </td><td>56.9 </td><td>55.2 </td><td>45.9 </td><td>51.9 </td><td>48.2 </td></tr>
+<tr><td>Gzip                    </td><td>55.7 </td><td>53.5 </td><td>53.9 </td><td>50.1 </td><td>59.4 </td></tr>
+<tr><td>Цепь Маркова, порядок 1  </td><td>62.3 </td><td>64.6 </td><td>63.2 </td><td>64.3 </td><td>66.1 </td></tr>
+<tr><td>Цепь Маркова, порядок 2  </td><td>60.9 </td><td>64.4 </td><td>61.8 </td><td>64.7 </td><td>64.5 </td></tr>
+<tr><td>Цепь Маркова, порядок 3  </td><td>48.6 </td><td>60.3 </td><td>59.3 </td><td>61.7 </td><td>63.3 </td></tr>
+<tr><td>RAR                     </td><td><b>84.3</b> </td><td><b>86.9</b> </td><td><b>87.3</b> </td><td>88.5 </td><td><b>89.4</b> </td></tr>
+<tr><td>PPM, порядок 2            </td><td>77.8  </td><td>79.1  </td><td>79.4  </td><td>80.5  </td><td>81.3  </td></tr>
+<tr><td>PPM, порядок 3            </td><td>80.6  </td><td>82.3  </td><td>84.0  </td><td>85.0  </td><td>86.4  </td></tr>
+<tr><td>PPM, порядок 4            </td><td>82.5  </td><td>85.4  </td><td>86.0  </td><td>87.7  </td><td>88.4  </td></tr>
+<tr><td>PPM, порядок 5            </td><td>82.2  </td><td>86.1  </td><td>86.3  </td><td><b>88.8</b>  </td><td>89.2  </td></tr></tbody></table></div>
+
+
+<p>
+Эксперименты, результаты которых представлены в таблице 1, проводились
+на массиве новостей агенства Рейтерс (Reuters Corpus Volume 1 или
+RCV1). Было отобрано 50 авторов с наибольшим объёмом статей (заметим,
+что эти авторы отличаются от 50 с максимальным <em>количеством</em>
+статей): всего 1813 статей. Выборка случайно была разбита на 10 равных
+частей, одна из которых использовалась для тестирования. Процент
+верного определения авторства приведён в последнем столбце
+таблицы&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:classification_performance">1</a>. Для исследования влияния
+дубликатов и плагиата на качество определения авторства были отобраны
+подвыборки этих статей, удовлетворяющих условию на значение индекса их
+повторяемости по отношению к остальному корпусу RCV1 (R &lt; 0.25,
+R &lt; 0.5, R &lt; 0.75, R &lt; 1.0). Результаты экспериментов для этих
+подвыборок приведены в других столбцах
+таблицы&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:classification_performance">1</a>. 
+
+</p><p>
+В справочных целях приведём результаты более обширного тестирования
+программ сжатия из&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#Kukush:2001" name="CITEKukush:2001">6</a>]. В приложении Д.Хмелёва
+к&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#Kukush:2001" name="CITEKukush:2001">6</a>] исследовались программы, представленные в
+таблице&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:compprogs">2</a>, с краткой справкой по алгоритмам,
+расшифровку которых читатель может найти в
+книге&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#compress-methods:2002" name="CITEcompress-methods:2002">4</a>]. Проверка различных программ
+проведена на корпусе текстов, который использовался
+в&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#khmelev:2000" name="CITEkhmelev:2000">9</a>,<a href="http://compression.ru/download/articles/classif/intro.html#khmelev:2000a" name="CITEkhmelev:2000a">10</a>,<a href="http://compression.ru/download/articles/classif/intro.html#Kukush:2001" name="CITEKukush:2001">6</a>].  Корпус состоял из
+385 текстов 82 писателей. Общий объем текстов составляет около 128
+миллионов букв.  Тексты подверглись предварительной обработке.
+Во-первых, были склеены все слова, разделенные переносом. Далее были
+выкинуты все слова, начинавшиеся с прописной буквы. Оставшиеся слова
+помещены в том порядке, в каком они находились в исходном тексте с
+разделителем из символа перевода строки. У каждого из n=82 писателей
+было отобрано по контрольному произведению U<sub>i</sub>.  Остальные тексты
+были слиты в обучающие тексты S<sub>i</sub>, i=1, ..., 82. Объем
+каждого контрольного произведения составлял не менее 50-100 тысяч
+букв.
+
+</p><p>
+Заметим, что такая предварительная обработка позволяет сравнить
+результаты распознавания с марковским подходом, применённым
+в&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#khmelev:2000" name="CITEkhmelev:2000">9</a>].
+
+</p><p>
+
+</p><p>
+<a name="tth_tAb2">
+</a> </p><center>Таблица 2: Программы сжатия</center>
+<a name="t:compprogs">
+</a>
+
+<center>
+
+<div class="scrollable"><table border="1">
+<tbody><tr><td>Программа</td><td colspan="1" align="center">Автор</td><td colspan="1" align="center">Используемые алгоритмы</td></tr>
+<tr><td>1. <tt>7zip</tt> версия 2.11</td><td>Игорь Павлов
+     </td><td width="197">арифм. кодирование, LZ + арифм. кодирование, PPM</td></tr>
+<tr><td>2. <tt>arj</tt> версия 2.60 </td><td>RAO Inc. </td><td width="197">LZSS + Хаффман </td></tr>
+<tr><td>3. <tt>bsa</tt> версия 1.9.3 </td><td>Сергей Бабичев </td><td width="197">LZ </td></tr>
+<tr><td>4. <tt>bzip2</tt> </td><td>Джулиан Сьюард</td><td width="197">Барроуз-Уиллер + Хаффман</td></tr>
+<tr><td>5. <tt>compress</tt> </td><td>Sun Inc. </td><td width="197">LZW </td></tr>
+<tr><td>6. <tt>dmc</tt> </td><td>Гордон В. Кормак</td><td width="197">DMC</td></tr>
+<tr><td>7. <tt>gzip</tt> </td><td>Жан-Луи Гаили</td><td width="197">Шеннон-Фано, Хаффман</td></tr>
+<tr><td>8. <tt>ha</tt> версия 0.999c</td><td>Гарри Хирвола </td><td width="197">Скользящее окно словаря
+ + арифм. кодирование</td></tr>
+<tr><td>9. <tt>huff1</tt> </td><td>Вильям Демас (LDS 1.1) </td><td width="197">статический Хаффман</td></tr>
+<tr><td>10. <tt>lzari</tt> </td><td>Харахико Окумура (LDS 1.1) </td><td width="197">LZSS+арифм. кодирование</td></tr>
+<tr><td>11. <tt>lzss</tt> </td><td>Харахико Окумура (LDS 1.1) </td><td width="197">LZSS</td></tr>
+<tr><td>12. <tt>ppm</tt> </td><td>Вильям Теахан</td><td width="197">PPM</td></tr>
+<tr><td>13. <tt>ppmd5</tt> версия F</td><td>Дмитрий Шкарин</td><td width="197">PPM</td></tr>
+<tr><td>14. <tt>rarw</tt> версия 2.00</td><td>Евгений Рошаль </td><td width="197">вариант LZ77 + Хаффман</td></tr>
+<tr><td>15. <tt>rar</tt> версия 2.70</td><td>Евгений Рошаль </td><td width="197">вариант LZ77  + Хаффман</td></tr>
+<tr><td>16. <tt>rk</tt> версия 1.03<font face="symbol">a</font> </td><td>Малькольм Тейлор </td><td width="197">LZ, PPMZ</td></tr></tbody></table></div>
+
+</center>
+
+<p>
+Большинство из этих программ с описаниями можно получить из Индекса 
+архиваторов <a href="http://web.act.by.net/~act/act-index.html"><tt>http://web.act.by.net/~act/act-index.html</tt></a>,
+который поддерживает Джефф Гилхрист<a href="http://compression.ru/download/articles/classif/intro.html#tthFtNtAAE" name="tthFrefAAE"><sup>4</sup></a>.
+Программа <tt>compress</tt> взята из операционной системы SunOS 5.6. 
+Программа <tt>dmc</tt> доступна по ftp <a href="http://plg.uwaterloo.ca/~ftp/dmc/"><tt>http://plg.uwaterloo.ca/~ftp/dmc/</tt></a>. 
+Заметим, что <tt>dmc</tt> имеет опцию максимально используемой 
+оперативной памяти. В нашем случае использовалась опция в
+100000000 байт.
+Пакет программ LDS 1.1 также доступен по ftp<a href="http://compression.ru/download/articles/classif/intro.html#tthFtNtAAF" name="tthFrefAAF"><sup>5</sup></a>.
+Программа <tt>ppm</tt> доступна с домашней страницы 
+ее автора <a href="http://www.cs.waikato.ac.nz/~wjt/"><tt>http://www.cs.waikato.ac.nz/~wjt/</tt></a>.
+
+</p><p>
+Результаты применения этих программ представлены в 
+табл.&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:compres">3</a>, где в последней строке приведены данные, 
+которые получаются при применении цепей Маркова&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#khmelev:2000" name="CITEkhmelev:2000">9</a>]
+на том же материале.
+Вычисления, выполненные при составлении табл.&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:compres">3</a>, 
+проводились под 
+несколькими операционными системами на разных платформах и 
+заняли около трех недель непрерывного счета.
+
+</p><p>
+
+</p><p>
+<a name="tth_tAb3">
+</a> </p><center>Таблица 3: Точность определения авторства текста с использованием 
+алгоритмов сжатия данных</center>
+<a name="t:compres">
+</a>
+
+<center>
+
+<div class="scrollable"><table border="1">
+<tbody><tr><td>Программа</td><td colspan="7" align="center">Ранг</td></tr>
+<tr><td></td><td align="right">0</td><td align="right">1</td><td align="right">2</td><td align="right">3</td><td align="right">4</td><td align="right"> <font face="symbol">і</font> 5</td><td align="right">M</td></tr>
+<tr><td><tt>7zip</tt></td><td align="right">39</td><td align="right">9</td><td align="right">3</td><td align="right">2</td><td align="right">3</td><td align="right">26</td><td align="right">6,43 </td></tr>
+<tr><td><tt>arj</tt></td><td align="right">46</td><td align="right">5</td><td align="right">2</td><td align="right">7</td><td align="right">2</td><td align="right">20</td><td align="right">5,16 </td></tr>
+<tr><td><tt>bsa</tt></td><td align="right">44</td><td align="right">9</td><td align="right">3</td><td align="right">1</td><td align="right">1</td><td align="right">24</td><td align="right">5,30 </td></tr>
+<tr><td><tt>bzip2</tt></td><td align="right">38</td><td align="right">5</td><td align="right">5</td><td align="right">1</td><td align="right">&nbsp;</td><td align="right">33</td><td align="right">13,68 </td></tr>
+<tr><td><tt>compress</tt></td><td align="right">12</td><td align="right">1</td><td align="right">1</td><td align="right">3</td><td align="right">2</td><td align="right">63</td><td align="right">24,37 </td></tr>
+<tr><td><tt>dmc</tt></td><td align="right">36</td><td align="right">4</td><td align="right">3</td><td align="right">4</td><td align="right">4</td><td align="right">31</td><td align="right">9,81 </td></tr>
+<tr><td><tt>gzip</tt></td><td align="right">50</td><td align="right">4</td><td align="right">1</td><td align="right">2</td><td align="right">1</td><td align="right">24</td><td align="right">4,55 </td></tr>
+<tr><td><tt>ha</tt></td><td align="right">47</td><td align="right">8</td><td align="right">1</td><td align="right">3</td><td align="right">3</td><td align="right">20</td><td align="right">5,60 </td></tr>
+<tr><td><tt>huff1</tt></td><td align="right">10</td><td align="right">11</td><td align="right">4</td><td align="right">4</td><td align="right">2</td><td align="right">51</td><td align="right">15,37 </td></tr>
+<tr><td><tt>lzari</tt></td><td align="right">17</td><td align="right">5</td><td align="right">4</td><td align="right">2</td><td align="right">6</td><td align="right">48</td><td align="right">14,99 </td></tr>
+<tr><td><tt>lzss</tt></td><td align="right">14</td><td align="right">3</td><td align="right">1</td><td align="right">1</td><td align="right">3</td><td align="right">60</td><td align="right">20,05 </td></tr>
+<tr><td><tt>ppm</tt></td><td align="right">22</td><td align="right">14</td><td align="right">2</td><td align="right">1</td><td align="right">3</td><td align="right">40</td><td align="right">10,39 </td></tr>
+<tr><td><tt>ppmd5</tt></td><td align="right">46</td><td align="right">6</td><td align="right">6</td><td align="right">2</td><td align="right">&nbsp;</td><td align="right">22</td><td align="right">5,96 </td></tr>
+<tr><td><tt>rar</tt></td><td align="right">58</td><td align="right">1</td><td align="right">1</td><td align="right">1</td><td align="right">&nbsp; </td><td align="right">21</td><td align="right">7,22 </td></tr>
+<tr><td><tt>rarw</tt></td><td align="right"><b>71</b></td><td align="right"><b>3</b></td><td align="right">&nbsp; </td><td align="right"><b>2</b></td><td align="right"><b>1</b></td><td align="right"><b>5</b></td><td align="right"><b>1,44 </b></td></tr>
+<tr><td><tt>rk</tt></td><td align="right">52</td><td align="right">9</td><td align="right">3</td><td align="right">1</td><td align="right">&nbsp; </td><td align="right">17</td><td align="right">4,20 </td></tr>
+<tr><td>Цепи Маркова (см.&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#khmelev:2000" name="CITEkhmelev:2000">9</a>])</td><td align="right">69 </td><td align="right">3 </td><td align="right">2 </td><td align="right">1 </td><td align="right">&nbsp; </td><td align="right">7 </td><td align="right">2,35</td></tr></tbody></table></div>
+
+</center>
+
+<p>
+Анализ таблиц&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:classification_performance">1</a> и&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:compres">3</a>
+позволяет сделать любопытные предварительные выводы. Во-первых,
+простейший подход с использованием цепей Маркова первого порядка
+показывает неплохие результаты на файлах большого объёма (как
+представлено в таблице&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:compres">3</a>), проваливаясь по сравнению с
+другими методами на небольших отрывках длиной в 2-5 тысяч символов
+(см. таблицу&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:classification_performance">1</a>), что в силу
+компактности и скорости работы позволяет рекомендовать его к
+использованию в демонстрационных классификаторах, вроде
+Лингвоанализатора на Русской Фантастике
+<a href="http://www.rusf.ru/books/analysis"><tt>http://www.rusf.ru/books/analysis</tt></a> и на Самиздате
+<a href="http://zhurnal.lib.ru/"><tt>http://zhurnal.lib.ru</tt></a>. Впрочем, точность может возрасти при
+применении модели PPM 1-го порядка, т.е. при комбинировании марковских
+цепей первого и второго порядков, при небольших дополнительных
+расходах. Решение вопроса полезности такого усовершенствования
+предоставляется читателю в качестве упражнения.
+
+</p><p>
+Таблица&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:compres">3</a> также отражает заметный прогресс в
+моделировании текстов у архиваторов: простейшие архиваторы с небольшим
+словарём показывают заметно худшие результаты по сравнению с
+современными программами сжатия. 
+
+</p><p>
+Тем не менее, остаются и открытые вопросы. Скажем, <tt>rarw</tt>
+применяющий модификацию алгоритма LZ обходит многие другие методы на
+файлах большого объёма (как демонстрирует таблица&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:compres">3</a>). В
+то же время <tt>gzip</tt> и <tt>7zip</tt>, также применяющие некоторую
+модификацию LZ, значительно отстают по точности. 
+
+</p><p>
+Дальнейшие выводы предоставляется сделать читателю самостоятельно.
+
+</p><p>
+     </p><h3><a name="tth_sEc2.4">
+2.4</a>&nbsp;&nbsp;Открытые вопросы</h3>
+Очень многие вопросы, связанные с энтропийной классификацией, всё ещё
+требуют дополнительного исследования, результаты которых автор
+настоящего обзора с удовольствием бы узнал от других.
+
+<ol type="1"><p>
+</p><li> Данные таблицы&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:classification_performance">1</a> показывают,
+  что PPM превосходит остальные алгоритмы с точки зрения классификации
+  небольших текстов. Так ли это на самом деле? Вполне возможно, что
+  грамотная реализация LZ77 (какой она была, например в RAR 2.71, что
+  демонстрирует таблица&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#t:compres">3</a>)
+  может дать лучшее качество определения авторства, чем <tt>gzip</tt>.
+  Преобразование Барроуза-Уилера также не стоит сбрасывать со счетов,
+  поскольку <tt>bzip2</tt> реализует лишь классический способ
+  кодирования преобразованного текста, кроме того на результаты влияет
+  блочная структура преобразования. Вполне возможно, что новые методы
+  кодирования преобразованного текста приведут к лучшим результатам.</li>
+<p>
+</p><li> Как использовать энтропийный подход к классификации без
+  обучения? (некоторые начальные результаты имеются в дипломной
+  работе&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#Thaper:2001" name="CITEThaper:2001">5</a>]).</li>
+<p>
+</p><li> Какова связь между индексом повторяемости R и относительной
+  энтропией текстов (хотя бы на эмпирическом уровне)?</li>
+<p>
+</p><li> Насколько велико влияние конечных буферов в <tt>gzip</tt> и
+  <tt>bzip2</tt> на их производительность в задаче классификации?</li>
+<p>
+</p><li> Как непосредственно использовать алгоритмы на основе LZ77 и BWT
+  для классификации (не используя шельфовый трюк)?</li>
+<p>
+</p><li> Алгоритм <tt>bzip2</tt> пользуется классификацией без обучения для
+  группировки 50-буквенных фрагментов текста. Можно ли использовать
+  подход к классификации без обучения с помощью индекса повторяемости,
+  предложенный в&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#khmelev:2003" name="CITEkhmelev:2003">11</a>] для аналогичной группировки и
+  даёт ли это какой-нибудь выигрыш?</li>
+</ol>
+
+<p>
+ </p><h2><a name="tth_sEc3">
+3</a>&nbsp;&nbsp;Автоматическая разметка</h2>
+<a name="s:markup">
+</a>
+
+     <h3><a name="tth_sEc3.1">
+3.1</a>&nbsp;&nbsp;Краткое описание</h3>
+
+<p>
+Целью автоматической разметки (естественно-языкового) текста является
+извлечение некоторой структурированной информации из обычного текста.
+По сравнению с записями, содержащимися в базах данных, текст обычно
+неструктурирован, аморфен и труден для автоматической обработки, в
+силу наличия <em>очень большого количества исключений, плохо
+  поддающихся программированию</em>. Однако, в современном мире текст
+является основным средством обмена информации, а потому извлечение из
+него информации является задачей нужной, а временами необходимой.
+
+</p><p>
+Анализ естественно-языковых текстов часто относят к задачам
+искуственного интеллекта. Однако, после преждевременных заявлений о
+реальности машинного перевода в 1960-х годах, многие учёные
+скептически относятся к утверждениям об автоматическом «понимании»
+естественно-языковых текстов. Наиболее развитые исследования в этой
+области сфокусированы в специальных областях, на небольших словарях,
+специальном (и сложном!) программировании, но даже при огромных
+затратах труда построенные системы ИИ зачастую далеки от желаемых
+возможностей. Специальные корпуса текстов представляют большой шаг
+вперёд к статистическому подходу в автоматической разметке текста, но
+их построение, опять-таки наталкивается на большие сложности. 
+
+</p><p>
+Тем не менее во многих случаях автоматическая разметка текста всё-таки
+возможна, поскольку <em>понимание</em> текста не всегда является
+необходимым для разметки <em>структурированной информации</em>, с
+которой мы ежедневно имеем дело в большинстве документов. Обычные
+документы полны очевидно структурированной информацией: телефоны,
+факсы, почтовые адреса, адреса электронной почты, подписи к
+электронным письмам, аннотации, содержания, списки ссылок на
+литературу, просто списки (например, новостей с датами), таблицы,
+даты, картинки, заголовки, адреса в интернете, и т.п. При чтении
+электронных книг, которые обычно хранятся в текстовом формате,
+отформатированными по правому краю в 70 символов, тоже возникают
+структурированные данные: абзацы; переносы, тире и дефисы, путающиеся
+друг с другом; включённые в текст отрывки поэзии; заголовки частей
+текста; эпиграфы; примечания; имена авторов, жанр произведения,
+предисловия (других авторов); различные способы выделения текста
+(например, парой символов подчёркивания или парой звёздочек); номера
+страниц, сохранившиеся от исходных текстов (приводит к ошибкам в
+определении переносов); примечания оцифровщика текстов (в конце или в
+начале текста) и т.п.
+
+</p><p>
+Настоящую проблему для составителей размеченных корпусов текстов
+представляют имена и названия. Скажем, депутата по фамилии «Носков»
+очень трудно стандартными методами (без понимания текста) отделить от
+«носков» и т.д. Имеется ли какой-нибудь выход из такой ситуации? Да,
+имеется, и он состоит в использовании моделей для текста, и тесно
+связан со сжатием данных с использованием PPM.
+
+</p><p>
+Напомним, что сжатие PPM разбивается на два этапа: моделирование
+исходного текста и его кодирование&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#compress-methods:2002" name="CITEcompress-methods:2002">4</a>]. Идея
+подхода очень проста. Предположим, что у нас уже имеется размеченный
+текст S и будем для простоты считать, что при разметке использовались
+мета-символы, отсутствующие в стандартном представлении текстов с
+помощью расширений ASCII. Наша задача: восстановить разметку текста
+T, который никаких мета-символов не содержит. Например, в тексте S
+явным образом размечены начала каждого абзаца символом @, в то время
+как текст T таких символов не содержит. 
+
+</p><p>
+Чтобы восстановить разметку предлагается сначала построить модель M
+для текста S. Далее, мы пытаемся выбрать такой вариант разметки
+текста T, который обеспечивает его кодирование минимальной длиной с
+использованием модели M. Разумеется, перебор <em>всех</em> вариантов
+не всегда возможен и его можно сузить некоторыми априорными
+соображениями. В нашем примере с простановкой символов абзаца @
+по-видимому, достаточно перебирать варианты простановки @ только в
+начале строк. На практике создаётся дерево всех возможных вариантов,
+которое время от времени обрезается (своеобразный метод ветвей и
+границ). Имеются и другие хитрости, которые можно найти
+в&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#teahan:1997" name="CITEteahan:1997">12</a>,<a href="http://compression.ru/download/articles/classif/intro.html#witten:1999" name="CITEwitten:1999">13</a>,<a href="http://compression.ru/download/articles/classif/intro.html#teahan_etal:2000" name="CITEteahan_etal:2000">14</a>].
+
+</p><p>
+     </p><h3><a name="tth_sEc3.2">
+3.2</a>&nbsp;&nbsp;Открытые вопросы и задачи</h3>
+
+<p>
+
+</p><ol type="1"><p>
+</p><li> Возможно ли использование алгоритмов, отличных от PPM для задач
+  автоматической разметки текста? Пример предыдущего раздела
+  показывает, что классификацию текстов можно проводить с использованием
+  шельфового алгоритма с любыми алгоритмами сжатия текста. Возможно,
+  аналогичный трюк существует и для LZ77- и BWT- методов сжатия
+  текста.</li>
+<p>
+</p><li> Можно улучшать сжатие за счёт использования разных моделей для
+  разных структурных единиц текста - имён, названий и т.п. Как
+  полученный эффект соотносится с эффектом улучшения сжатия от
+  предварительной обработки текста, описанного
+  в&nbsp;[<a href="http://compression.ru/download/articles/classif/intro.html#compress-methods:2002" name="CITEcompress-methods:2002">4</a>]?</li>
+<p>
+</p><li> Создать дружественную пользователю систему автоматической
+  разметки. Желающие помочь могут обращаться к автору этого сочинения.</li>
+</ol>
+
+<p>
+
+</p><p>
+</p><h2>СПИСОК ЛИТЕРАТУРЫ</h2>
+
+<dl compact="compact">
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEshannon:1948" name="shannon:1948">[1]</a></dt><dd>
+C.&nbsp;E. Shannon.
+ A mathematical theory of communication.
+ <em>Bell System Technical Journal</em>, 27:379-423,623-656,1948, 1948.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEKolmogorov" name="Kolmogorov">[2]</a></dt><dd>
+А.Н. Колмогоров.
+ Три подхода к определению понятия «количество информации».
+ <em>Пробл. Пер. Информ.</em>, 1(1):3-11, 1965.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEbrown:1992" name="brown:1992">[3]</a></dt><dd>
+P.&nbsp;F. Brown, S.&nbsp;A.&nbsp;Della Pietra, V.&nbsp;J.&nbsp;Della Pietra, J.&nbsp;C. Lai, and R.&nbsp;L.
+  Mercer.
+ An estimate of an upper bound for the entropy of English.
+ <em>Computational Linguistics</em>, 18(1):31-40, 1992.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEcompress-methods:2002" name="compress-methods:2002">[4]</a></dt><dd>
+Д.&nbsp;Ватолин, А.&nbsp;Ратушняк, М.&nbsp;Смирнов, and В.&nbsp;Юкин.
+ <em>Методы сжатия данных. Устройство архиваторов, сжатие изображений
+  и видео</em>.
+ Диалог-МИФИ, Москва, 2002.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEThaper:2001" name="Thaper:2001">[5]</a></dt><dd>
+N.&nbsp;Thaper.
+ Using compression for source based classification of text.
+ Master's thesis, M.I.T., February 2001.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEKukush:2001" name="Kukush:2001">[6]</a></dt><dd>
+О.В. Кукушкина, А.А. Поликарпов, and Д.В. Хмелёв.
+ Определение авторства текста с использованием буквенной и
+  грамматической информации.
+ <em>Проблемы передачи информации</em>, 37(2):96-108, 2001.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEteahan:2001" name="teahan:2001">[7]</a></dt><dd>
+W.&nbsp;J. Teahan and D.&nbsp;J. Harper.
+ Using compression- based language models for text categorization.
+ In <em>Workshop on Lang. Modeling and Inform. Retrieval</em>, pages
+  83-88, Carnegie Mellon University, May 2001.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEkhmelev:2003a" name="khmelev:2003a">[8]</a></dt><dd>
+D.Khmelev and B.Teahan.
+ Repetition based measure for verification of text collections and
+  text categorization.
+ In <em>Submitted to SIGIR'03</em>, 2003.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEkhmelev:2000" name="khmelev:2000">[9]</a></dt><dd>
+Д.В. Хмелёв.
+ Распознавание автора текста с использованием цепей
+  А.А.&nbsp;Маркова.
+ <em>Вестн. МГУ. Сер. 9, Филология</em>, (2):115-126, 2000.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEkhmelev:2000a" name="khmelev:2000a">[10]</a></dt><dd>
+D.V. Khmelev.
+ Disputed Authorship Resolution through Using Relative
+  Empirical Entropy for Markov Chains of Letters in Human
+  Language Text.
+ <em>J. of Quantitative Linguistics</em>, 7(3):201-207, 2000.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEkhmelev:2003" name="khmelev:2003">[11]</a></dt><dd>
+D.Khmelev and B.Teahan.
+ Verification of text collections for text categorization and natural
+  language processing.
+ Technical Report AIIA 03.1, University of Bangor, School of
+  Informatics, 2003.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEteahan:1997" name="teahan:1997">[12]</a></dt><dd>
+W.&nbsp;J. Teahan, S.&nbsp;Inglis, J.&nbsp;G. Cleary, and G.&nbsp;Holmes.
+ Correcting english text using ppm models.
+ In <em>Proc. DCC'1997</em>, pages 289-298, Los Alamos, CA, 1997.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEwitten:1999" name="witten:1999">[13]</a></dt><dd>
+I.&nbsp;H. Witten, Z.&nbsp;Bray, M.&nbsp;Mahoui, and W.&nbsp;J. Teahan.
+ Using language models for generic entity extraction.
+ In <em>ICML-99 Worskhop: Machine learning in text data analysis</em>,
+  1999.
+
+<p>
+</p></dd>
+ <dt><a href="http://compression.ru/download/articles/classif/intro.html#CITEteahan_etal:2000" name="teahan_etal:2000">[14]</a></dt><dd>
+W.&nbsp;J. Teahan, Y.Y. Wen, R.&nbsp;McNabb, and I.&nbsp;H. Witten.
+ Using compression models to segment Chinese text.
+ <em>Computational Linguistics</em>, 26(3):375-393, 2000.</dd>
+</dl>
+
+<p>
+
+</p><h1>Содержание </h1>
+<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc1">1&nbsp; Введение</a><br>
+<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2">2&nbsp; Классификация</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2.1">2.1&nbsp; О классификации мышей</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2.2">2.2&nbsp; О классификации текстов: обзор других методов</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2.3">2.3&nbsp; Энтропийная классификация (с помощью сжатия)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc2.4">2.4&nbsp; Открытые вопросы</a><br>
+<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc3">3&nbsp; Автоматическая разметка</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc3.1">3.1&nbsp; Краткое описание</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://compression.ru/download/articles/classif/intro.html#tth_sEc3.2">3.2&nbsp; Открытые вопросы и задачи</a><br>
+ 
+
+
+<p>
+</p><hr><h3>Примечания:</h3>
+
+<p>
+<a name="tthFtNtAAB"></a><a href="http://compression.ru/download/articles/classif/intro.html#tthFrefAAB"><sup>1</sup></a>которое получилось не совсем кратким
+</p><p>
+<a name="tthFtNtAAC"></a><a href="http://compression.ru/download/articles/classif/intro.html#tthFrefAAC"><sup>2</sup></a>Оговорка «как правило» имеет
+смысл, поскольку имеются более сложные способы кодирования букв,
+особенно, если они представляются в Уникоде (Unicode): UCS-2, UCS-4,
+UTF-8 и т.п.; не считая экзотических внутренних кодировок в MULE Emacs,
+<span class="roman">L</span><sup><span class="roman">A</span></sup><span class="roman">T</span><sub><span class="roman">E</span></sub><span class="roman">X</span>а и прочих многоязыковых программных пакетов
+</p><p>
+<a name="tthFtNtAAD"></a><a href="http://compression.ru/download/articles/classif/intro.html#tthFrefAAD"><sup>3</sup></a>Только Ворд без ухищрений не подходит!
+</p><p>
+<a name="tthFtNtAAE"></a><a href="http://compression.ru/download/articles/classif/intro.html#tthFrefAAE"><sup>4</sup></a>Jeff Gilchrist, jeffg@cips.ca
+</p><p>
+<a name="tthFtNtAAF"></a><a href="http://compression.ru/download/articles/classif/intro.html#tthFrefAAF"><sup>5</sup></a>
+<a href="ftp://garbo.uwasa.fi/pc/programming/lds/_11.zip"><tt>ftp://garbo.uwasa.fi/pc/programming/lds\_11.zip</tt></a></p></div> <!-- content -->
+
+</div> <!-- wrapper-middle -->
+</div> <!-- wrapper-top -->
+		
+		<div id="footer">
+			<p><a href="mailto:video@compression.ru" target="_blank">Оставьте ваши замечания, предложения, мнения!</a></p>
+			<p>© 2001–2008 <a href="http://compression.ru/about/#team">Д.&nbsp;Ватолин, А.&nbsp;Ратушняк, М.&nbsp;Смирнов, В.&nbsp;Юкин, Е.&nbsp;Шелвин, Д.&nbsp;Шкарин и&nbsp;другие</a> Текст, состав.</p>
+			<p>© 2008–2011 <a href="http://compression.ru/about/#team">Д.&nbsp;Ватолин, М.&nbsp;Смирнов и&nbsp;другие</a> Текст, состав.</p>
+			<p>© 2005–2021 Видеогруппа <a href="http://graphics.cs.msu.ru/" target="_blank">Лаборатории компьютерной графики и мультимедиа</a></p>
+		</div>
+		
+<!-- now using Google Tag Manager. No Analytics at this place -->
+
+<div class="mallbery-caa" style="z-index: 2147483647 !important; text-transform: none !important; position: fixed;"></div><div class="mallbery-caa" style="z-index: 2147483647 !important; text-transform: none !important; position: fixed;"></div></body></html>

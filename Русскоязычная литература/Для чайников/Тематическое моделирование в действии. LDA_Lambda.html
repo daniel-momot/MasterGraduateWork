@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)https://lambda-it.ru/post/tematicheskoe-modelirovanie-v-deistvii-lda -->
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Тематическое моделирование в действии. LDA|Lambda</title>
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#212121">
+    <link rel="canonical" href="https://lambda-it.ru/" data-react-helmet="true">
+    <meta property="og:locale" content="ru_RU" data-react-helmet="true">
+    
+    <meta property="og:type" content="article" data-react-helmet="true">
+    
+    
+    
+    <meta property="og:site_name" content="Lambda" data-react-helmet="true">
+
+    <meta name="twitter:card" content="summary" data-react-helmet="true">
+    <meta name="twitter:site" content="Lambda" data-react-helmet="true">
+    
+    
+    
+
+    
+    
+    
+
+
+    <meta name="google-site-verification" content="rbTysRiI9clKIGMKgjFAELNW3FSTp--Q3L3BEEp0QI4">
+    <link href="./Тематическое моделирование в действии. LDA_Lambda_files/css" rel="stylesheet">
+<link rel="shortcut icon" href="https://lambda-it.ru/static/Avatar.ico"><link href="./Тематическое моделирование в действии. LDA_Lambda_files/app.css" rel="stylesheet"><style></style><link rel="stylesheet" type="text/css" href="chrome-extension://onbkopaoemachfglhlpomhbpofepfpom/styles.css"><link rel="stylesheet" type="text/css" href="chrome-extension://ldbfffpdfgghehkkckifnjhoncdgjkib/styles.css"><meta name="description" content="&lt;text&gt;
+Тематического моделирования прием машинного обучения без учителя для определения тем в коллекции документах.
+**Цель кластеризации** — разделить корпус документов на группы, то цель тематического моделирование — выделение основных тем из набора высказываний.
+LDA принадлежит семейству порождающий вероятностных моделей, в которых темы представлены вероятностями появления каждого слова из заданного набора.
+Уникальная особенность моделей LDA состоит в том что темы не обязательно должны быть различными и слова могут встречаться в нескольких темах; это придает некоторую нечеткость определяемым темам, что может пригодиться для совладения с гибкостью языка.
+Блей (Blei) с коллегами (2003) установили, что распределение Дирихле, семейство непрерывных распределений (способ измерения группировки по распределениям), - это удобный способ выявления тем, присутствующих в корпусе, а также проявляющихся в разных сочетаниях в каждом документе в корпусе.
+Фактически, метод латентного размещения Дирихле (LDA, Latent Dirichlet Allocation) дает нам наблюдаемое слово или лексему, по которому можно попытаться определить вероятную тему, распределение слов в каждой теме и сочетание тем в документе.Чтобы задействовать методы тематического моделирования в приложении, нужно создать настраиваемый конвейер, который будет экстраполировать темы из неструктурированных текстовых данных, и способ сохранения лучшей модели.
+Gensim изначально разрабатывалась как библиотека для тематического моделирования.
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+text = [token for token in text.split() if token not in russian_stopwords] # Удаляем стоп слова
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+**Коллокация** - словосочетание, имеющее признаки синтаксически и семантически целостной единицы, в котором выбор одного из компонентов осуществляется по смыслу, а выбор второго зависит от выбора первого (например, ставить условия — выбор глагола ставить определяется традицией и зависит от существительного условия, при слове предложение будет другой глагол — вносить).
+Алгоритм выделение коллокаций уже реализованно в библиотеке Gensim, но он начинает работать если обучить его на достаточно большом корпусе.
+Но для этого переведем наш корпус из коллекции документов, в коллекцию документов — токенов.
+&lt;/text&gt;
+text_clean= []
+bigram = Phrases(text_clean) # Создаем биграммы на основе корпуса
+trigram = Phrases(bigram[text_clean])# Создаем триграммы на основе корпуса
+for idx in range(len(text_clean)):
+for token in bigram[text_clean[idx]]:
+for token in trigram[text_clean[idx]]:
+&lt;text&gt;
+Теперь в нашем корпусе есть устойчивые выражения, и они не будут рассмотрены как отдельные слова, тем самым мы повысили устойчивость корпуса.
+Для обучения LDA модели осталось выполнить всего лишь один шаг, преобразовать наш корпус в словарь частот.
+&lt;/text&gt;
+from gensim.corpora.dictionary import Dictionary
+dictionary = Dictionary(text_clean)
+#Создадим словарь и корпус для lda модели
+corpus = [dictionary.doc2bow(doc) for doc in text_clean]
+После создания словаря частот, можно перейти к созданию LDA модели.
+И сразу посмотрим какие группы тематик выявила модель LDA.
+data = pyLDAvis.gensim.prepare(model, corpus, dictionary)
+1. Можно вывести ключевые слова и по ключевым словам подобрать название темы **model.show_topics()**
+corpus : Gensim корпус
+model_list : Список LDA моделей
+coherence_values :Когерентности, соответствующие модели LDA с количеством тем
+model_list, coherence_values = compute_coherence_values(dictionary=dictionary, corpus=corpus, texts=text_clean, start=2, limit=40, step=2)
+После нахождения наилучшей модели, с самой большой согласованность, сохраним ее и все сопутствующие к ней данные:
+def __init__(self, lda_path, dict_path, bigram_path, trigram_path):
+lda_path - путь к lda модели
+def clean(self, text):
+def bigram(self, text):
+for idx in range(len(text_clean)):
+for token in bigram[text_clean[idx]]:
+for token in trigram[text_clean[idx]]:
+bigram = self.bigram([clean_text])
+lda_path = &quot;./model/best_model.lda&quot;
+dict_path = &quot;./model/dictionary.dict&quot;
+lda = LdaPredictor(lda_path, dict_path,  bigram_path, trigram_path)
+Это все что нужно для нахождения и вывода наилучшей модели для тематического моделирования" data-react-helmet="true"><meta name="keywords" content="text ,темы ,темам ,тему ,теме ,тема ,и ,тем в коллекции ,для ,слова ,слово ,слов ,слове ,словам ,темах это ,корпусе ,корпуса ,корпусом ,lda ,моделей ,модели ,модель ,этой ,этого ,этом ,с ,gensim ,как ,какие ,dictionary ,корпус документов на ,по ,text_clean ,code ,import ,model ,можно ,когерентности ,когерентной ,когерентность ,словаря ,словарь ,словарю ,количества ,количество ,количеством ,plt ,self ,corpus ,in ,__init__ ,все ,из ,coherence_values ,данный ,данных ,данной ,данные ,что ,документах ,документы ,документе ,документ ,bigram ,моделирование ,а тематическое ,token ,pyldavis ,тематического моделирования ,def ,самое ,самый ,самым ,самой ,будет ,текста ,текстом ,текст ,к ,не ,ней ,мы ,выбор ,выбора ,trigram_path ,согласованности ,согласованность ,model_list ,коллекцию" data-react-helmet="true"><meta property="og:title" content="Тематическое моделирование в действии. LDA" data-react-helmet="true"><meta property="og:description" content="&lt;text&gt;
+Тематического моделирования прием машинного обучения без учителя для определения тем в коллекции документах.
+**Цель кластеризации** — разделить корпус документов на группы, то цель тематического моделирование — выделение основных тем из набора высказываний.
+LDA принадлежит семейству порождающий вероятностных моделей, в которых темы представлены вероятностями появления каждого слова из заданного набора.
+Уникальная особенность моделей LDA состоит в том что темы не обязательно должны быть различными и слова могут встречаться в нескольких темах; это придает некоторую нечеткость определяемым темам, что может пригодиться для совладения с гибкостью языка.
+Блей (Blei) с коллегами (2003) установили, что распределение Дирихле, семейство непрерывных распределений (способ измерения группировки по распределениям), - это удобный способ выявления тем, присутствующих в корпусе, а также проявляющихся в разных сочетаниях в каждом документе в корпусе.
+Фактически, метод латентного размещения Дирихле (LDA, Latent Dirichlet Allocation) дает нам наблюдаемое слово или лексему, по которому можно попытаться определить вероятную тему, распределение слов в каждой теме и сочетание тем в документе.Чтобы задействовать методы тематического моделирования в приложении, нужно создать настраиваемый конвейер, который будет экстраполировать темы из неструктурированных текстовых данных, и способ сохранения лучшей модели.
+Gensim изначально разрабатывалась как библиотека для тематического моделирования.
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+text = [token for token in text.split() if token not in russian_stopwords] # Удаляем стоп слова
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+**Коллокация** - словосочетание, имеющее признаки синтаксически и семантически целостной единицы, в котором выбор одного из компонентов осуществляется по смыслу, а выбор второго зависит от выбора первого (например, ставить условия — выбор глагола ставить определяется традицией и зависит от существительного условия, при слове предложение будет другой глагол — вносить).
+Алгоритм выделение коллокаций уже реализованно в библиотеке Gensim, но он начинает работать если обучить его на достаточно большом корпусе.
+Но для этого переведем наш корпус из коллекции документов, в коллекцию документов — токенов.
+&lt;/text&gt;
+text_clean= []
+bigram = Phrases(text_clean) # Создаем биграммы на основе корпуса
+trigram = Phrases(bigram[text_clean])# Создаем триграммы на основе корпуса
+for idx in range(len(text_clean)):
+for token in bigram[text_clean[idx]]:
+for token in trigram[text_clean[idx]]:
+&lt;text&gt;
+Теперь в нашем корпусе есть устойчивые выражения, и они не будут рассмотрены как отдельные слова, тем самым мы повысили устойчивость корпуса.
+Для обучения LDA модели осталось выполнить всего лишь один шаг, преобразовать наш корпус в словарь частот.
+&lt;/text&gt;
+from gensim.corpora.dictionary import Dictionary
+dictionary = Dictionary(text_clean)
+#Создадим словарь и корпус для lda модели
+corpus = [dictionary.doc2bow(doc) for doc in text_clean]
+После создания словаря частот, можно перейти к созданию LDA модели.
+И сразу посмотрим какие группы тематик выявила модель LDA.
+data = pyLDAvis.gensim.prepare(model, corpus, dictionary)
+1. Можно вывести ключевые слова и по ключевым словам подобрать название темы **model.show_topics()**
+corpus : Gensim корпус
+model_list : Список LDA моделей
+coherence_values :Когерентности, соответствующие модели LDA с количеством тем
+model_list, coherence_values = compute_coherence_values(dictionary=dictionary, corpus=corpus, texts=text_clean, start=2, limit=40, step=2)
+После нахождения наилучшей модели, с самой большой согласованность, сохраним ее и все сопутствующие к ней данные:
+def __init__(self, lda_path, dict_path, bigram_path, trigram_path):
+lda_path - путь к lda модели
+def clean(self, text):
+def bigram(self, text):
+for idx in range(len(text_clean)):
+for token in bigram[text_clean[idx]]:
+for token in trigram[text_clean[idx]]:
+bigram = self.bigram([clean_text])
+lda_path = &quot;./model/best_model.lda&quot;
+dict_path = &quot;./model/dictionary.dict&quot;
+lda = LdaPredictor(lda_path, dict_path,  bigram_path, trigram_path)
+Это все что нужно для нахождения и вывода наилучшей модели для тематического моделирования" data-react-helmet="true"><meta property="og:image" content="https://lambda-it.ru/media/article/tematicheskoe-modelirovanie-v-deistvii/lda.png" data-react-helmet="true"><meta property="og:url" content="https://lambda-it.ru/post/tematicheskoe-modelirovanie-v-deistvii-lda" data-react-helmet="true"><meta name="twitter:title" content="Тематическое моделирование в действии. LDA" data-react-helmet="true"><meta name="twitter:description" content="&lt;text&gt;
+Тематического моделирования прием машинного обучения без учителя для определения тем в коллекции документах.
+**Цель кластеризации** — разделить корпус документов на группы, то цель тематического моделирование — выделение основных тем из набора высказываний.
+LDA принадлежит семейству порождающий вероятностных моделей, в которых темы представлены вероятностями появления каждого слова из заданного набора.
+Уникальная особенность моделей LDA состоит в том что темы не обязательно должны быть различными и слова могут встречаться в нескольких темах; это придает некоторую нечеткость определяемым темам, что может пригодиться для совладения с гибкостью языка.
+Блей (Blei) с коллегами (2003) установили, что распределение Дирихле, семейство непрерывных распределений (способ измерения группировки по распределениям), - это удобный способ выявления тем, присутствующих в корпусе, а также проявляющихся в разных сочетаниях в каждом документе в корпусе.
+Фактически, метод латентного размещения Дирихле (LDA, Latent Dirichlet Allocation) дает нам наблюдаемое слово или лексему, по которому можно попытаться определить вероятную тему, распределение слов в каждой теме и сочетание тем в документе.Чтобы задействовать методы тематического моделирования в приложении, нужно создать настраиваемый конвейер, который будет экстраполировать темы из неструктурированных текстовых данных, и способ сохранения лучшей модели.
+Gensim изначально разрабатывалась как библиотека для тематического моделирования.
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+text = [token for token in text.split() if token not in russian_stopwords] # Удаляем стоп слова
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+**Коллокация** - словосочетание, имеющее признаки синтаксически и семантически целостной единицы, в котором выбор одного из компонентов осуществляется по смыслу, а выбор второго зависит от выбора первого (например, ставить условия — выбор глагола ставить определяется традицией и зависит от существительного условия, при слове предложение будет другой глагол — вносить).
+Алгоритм выделение коллокаций уже реализованно в библиотеке Gensim, но он начинает работать если обучить его на достаточно большом корпусе.
+Но для этого переведем наш корпус из коллекции документов, в коллекцию документов — токенов.
+&lt;/text&gt;
+text_clean= []
+bigram = Phrases(text_clean) # Создаем биграммы на основе корпуса
+trigram = Phrases(bigram[text_clean])# Создаем триграммы на основе корпуса
+for idx in range(len(text_clean)):
+for token in bigram[text_clean[idx]]:
+for token in trigram[text_clean[idx]]:
+&lt;text&gt;
+Теперь в нашем корпусе есть устойчивые выражения, и они не будут рассмотрены как отдельные слова, тем самым мы повысили устойчивость корпуса.
+Для обучения LDA модели осталось выполнить всего лишь один шаг, преобразовать наш корпус в словарь частот.
+&lt;/text&gt;
+from gensim.corpora.dictionary import Dictionary
+dictionary = Dictionary(text_clean)
+#Создадим словарь и корпус для lda модели
+corpus = [dictionary.doc2bow(doc) for doc in text_clean]
+После создания словаря частот, можно перейти к созданию LDA модели.
+И сразу посмотрим какие группы тематик выявила модель LDA.
+data = pyLDAvis.gensim.prepare(model, corpus, dictionary)
+1. Можно вывести ключевые слова и по ключевым словам подобрать название темы **model.show_topics()**
+corpus : Gensim корпус
+model_list : Список LDA моделей
+coherence_values :Когерентности, соответствующие модели LDA с количеством тем
+model_list, coherence_values = compute_coherence_values(dictionary=dictionary, corpus=corpus, texts=text_clean, start=2, limit=40, step=2)
+После нахождения наилучшей модели, с самой большой согласованность, сохраним ее и все сопутствующие к ней данные:
+def __init__(self, lda_path, dict_path, bigram_path, trigram_path):
+lda_path - путь к lda модели
+def clean(self, text):
+def bigram(self, text):
+for idx in range(len(text_clean)):
+for token in bigram[text_clean[idx]]:
+for token in trigram[text_clean[idx]]:
+bigram = self.bigram([clean_text])
+lda_path = &quot;./model/best_model.lda&quot;
+dict_path = &quot;./model/dictionary.dict&quot;
+lda = LdaPredictor(lda_path, dict_path,  bigram_path, trigram_path)
+Это все что нужно для нахождения и вывода наилучшей модели для тематического моделирования" data-react-helmet="true"><meta name="twitter:image" content="https://lambda-it.ru/media/article/tematicheskoe-modelirovanie-v-deistvii/lda.png" data-react-helmet="true"><meta itemprop="name" content="Тематическое моделирование в действии. LDA" data-react-helmet="true"><meta itemprop="description" content="&lt;text&gt;
+Тематического моделирования прием машинного обучения без учителя для определения тем в коллекции документах.
+**Цель кластеризации** — разделить корпус документов на группы, то цель тематического моделирование — выделение основных тем из набора высказываний.
+LDA принадлежит семейству порождающий вероятностных моделей, в которых темы представлены вероятностями появления каждого слова из заданного набора.
+Уникальная особенность моделей LDA состоит в том что темы не обязательно должны быть различными и слова могут встречаться в нескольких темах; это придает некоторую нечеткость определяемым темам, что может пригодиться для совладения с гибкостью языка.
+Блей (Blei) с коллегами (2003) установили, что распределение Дирихле, семейство непрерывных распределений (способ измерения группировки по распределениям), - это удобный способ выявления тем, присутствующих в корпусе, а также проявляющихся в разных сочетаниях в каждом документе в корпусе.
+Фактически, метод латентного размещения Дирихле (LDA, Latent Dirichlet Allocation) дает нам наблюдаемое слово или лексему, по которому можно попытаться определить вероятную тему, распределение слов в каждой теме и сочетание тем в документе.Чтобы задействовать методы тематического моделирования в приложении, нужно создать настраиваемый конвейер, который будет экстраполировать темы из неструктурированных текстовых данных, и способ сохранения лучшей модели.
+Gensim изначально разрабатывалась как библиотека для тематического моделирования.
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+&lt;/text&gt;
+text = [token for token in text.split() if token not in russian_stopwords] # Удаляем стоп слова
+&lt;text&gt;
+&lt;/text&gt;
+&lt;text&gt;
+**Коллокация** - словосочетание, имеющее признаки синтаксически и семантически целостной единицы, в котором выбор одного из компонентов осуществляется по смыслу, а выбор второго зависит от выбора первого (например, ставить условия — выбор глагола ставить определяется традицией и зависит от существительного условия, при слове предложение будет другой глагол — вносить).
+Алгоритм выделение коллокаций уже реализованно в библиотеке Gensim, но он начинает работать если обучить его на достаточно большом корпусе.
+Но для этого переведем наш корпус из коллекции документов, в коллекцию документов — токенов.
+&lt;/text&gt;
+text_clean= []
+bigram = Phrases(text_clean) # Создаем биграммы на основе корпуса
+trigram = Phrases(bigram[text_clean])# Создаем триграммы на основе корпуса
+for idx in range(len(text_clean)):
+for token in bigram[text_clean[idx]]:
+for token in trigram[text_clean[idx]]:
+&lt;text&gt;
+Теперь в нашем корпусе есть устойчивые выражения, и они не будут рассмотрены как отдельные слова, тем самым мы повысили устойчивость корпуса.
+Для обучения LDA модели осталось выполнить всего лишь один шаг, преобразовать наш корпус в словарь частот.
+&lt;/text&gt;
+from gensim.corpora.dictionary import Dictionary
+dictionary = Dictionary(text_clean)
+#Создадим словарь и корпус для lda модели
+corpus = [dictionary.doc2bow(doc) for doc in text_clean]
+После создания словаря частот, можно перейти к созданию LDA модели.
+И сразу посмотрим какие группы тематик выявила модель LDA.
+data = pyLDAvis.gensim.prepare(model, corpus, dictionary)
+1. Можно вывести ключевые слова и по ключевым словам подобрать название темы **model.show_topics()**
+corpus : Gensim корпус
+model_list : Список LDA моделей
+coherence_values :Когерентности, соответствующие модели LDA с количеством тем
+model_list, coherence_values = compute_coherence_values(dictionary=dictionary, corpus=corpus, texts=text_clean, start=2, limit=40, step=2)
+После нахождения наилучшей модели, с самой большой согласованность, сохраним ее и все сопутствующие к ней данные:
+def __init__(self, lda_path, dict_path, bigram_path, trigram_path):
+lda_path - путь к lda модели
+def clean(self, text):
+def bigram(self, text):
+for idx in range(len(text_clean)):
+for token in bigram[text_clean[idx]]:
+for token in trigram[text_clean[idx]]:
+bigram = self.bigram([clean_text])
+lda_path = &quot;./model/best_model.lda&quot;
+dict_path = &quot;./model/dictionary.dict&quot;
+lda = LdaPredictor(lda_path, dict_path,  bigram_path, trigram_path)
+Это все что нужно для нахождения и вывода наилучшей модели для тематического моделирования" data-react-helmet="true"><meta itemprop="image" content="https://lambda-it.ru/media/article/tematicheskoe-modelirovanie-v-deistvii/lda.png" data-react-helmet="true"></head>
+<body>
+<div id="root"><div><div class="header"><div class="header-menu"><svg class="icon" width="30px" height="30px" viewBox="0 0 30 30"><path class="icon-path" fill="#4c4c4c" d="M6,21 L24,21 L24,19 L6,19 L6,21 L6,21 Z M6,16 L24,16 L24,14 L6,14 L6,16 L6,16 Z M6,9 L6,11 L24,11 L24,9 L6,9 L6,9 Z"></path></svg></div><div class="header-logo"><svg x="0" y="0" width="64" height="64" viewBox="0, 0, 1500, 1500"><defs><lineargradient id="Gradient_1" gradientUnits="userSpaceOnUse" x1="392.27" y1="523.008" x2="-113.709" y2="1382.965" gradientTransform="matrix(0.866, -0.5, 0.5, 0.866, 0, 0)"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"></stop><stop offset="0.33" stop-color="#00E9FF"></stop></lineargradient><lineargradient id="Gradient_2" gradientUnits="userSpaceOnUse" x1="410.259" y1="514.432" x2="-113.609" y2="1388.951" gradientTransform="matrix(0.866, -0.5, 0.5, 0.866, 0, 0)"><stop offset="0.736" stop-color="#FF00D2"></stop><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"></stop></lineargradient></defs><g id="Layer_2"><path d="M685.935,282.165 L692.107,292.855 L1207.629,1185.764 L1226.144,1217.833 L920.09,1217.833 L913.918,1207.143 L742.784,910.73 L571.649,1207.143 L565.477,1217.833 L259.423,1217.833 L277.939,1185.764 L589.757,645.679 L398.397,314.235 L379.882,282.165 L685.935,282.165 z M661.248,324.925 L453.944,324.925 L632.96,634.989 L639.132,645.679 L632.96,656.369 L333.486,1175.073 L540.79,1175.073 L724.268,857.28 L742.784,825.21 L761.299,857.28 L944.777,1175.073 L1152.081,1175.073 L661.248,324.925 z" fill="url(#Gradient_1)"></path><path d="M735.07,282.166 L741.242,292.856 L1256.763,1185.765 L1275.279,1217.835 L969.224,1217.835 L963.052,1207.145 L791.918,910.731 L620.784,1207.145 L614.612,1217.835 L308.558,1217.835 L327.073,1185.765 L638.891,645.681 L447.532,314.236 L429.016,282.166 L735.07,282.166 z M710.382,324.926 L503.078,324.926 L682.094,634.991 L688.266,645.681 L682.094,656.371 L382.62,1175.075 L589.924,1175.075 L773.403,857.281 L791.918,825.211 L810.434,857.281 L993.912,1175.075 L1201.216,1175.075 L710.382,324.926 z" fill="url(#Gradient_2)"></path></g></svg></div><ul class="header-socials"><li class="header-item"><a class="header-link" href="https://www.instagram.com/lambda_mai/"><svg class="icon" width="20px" height="20px" viewBox="0 0 24 24"><path class="icon-path" fill="#4c4c4c" d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"></path></svg></a></li></ul><div class="sidebar"><ul class="sidebar-list"><li class="sidebar-text"><a class="sidebar-link" href="https://lambda-it.ru/">Публикации</a></li><li class="sidebar-text"><a class="sidebar-link" href="https://lambda-it.ru/about">О нас</a></li></ul></div></div><div><div><div class="articleheader articleheader_centered" style="background-image: url(&quot;https://lambda-it.ru/media/article/tematicheskoe-modelirovanie-v-deistvii/lda_compressed_1310x750.wep&quot;); background-position: center center;"><div class="articleheader-content"><div class="articleheader-tools"></div><div class="articleheader-main"><span class="articleheader-tag" style="background-color: rgb(255, 102, 240);">NLP</span><span class="articleheader-date">07 May 19:35</span><h1 class="articleheader-title">Тематическое моделирование в действии. LDA</h1><span class="articleheader-line" style="border-color: rgb(255, 102, 240);"></span></div><div class="articleheader-tools"></div><div class="articleheader-info"><span class="articleheader-item"><svg class="icon" width="30px" height="30px" viewBox="0 0 30 30"><path class="icon-path" fill="#ccc" d="M15,5 C9.48,5 5,9.48 5,15 C5,20.52 9.48,25 15,25 C20.52,25 25,20.52 25,15 C25,9.48 20.52,5 15,5 L15,5 Z M15,8 C16.66,8 18,9.34 18,11 C18,12.66 16.66,14 15,14 C13.34,14 12,12.66 12,11 C12,9.34 13.34,8 15,8 L15,8 Z M15,22.2 C12.5,22.2 10.29,20.92 9,18.98 C9.03,16.99 13,15.9 15,15.9 C16.99,15.9 20.97,16.99 21,18.98 C19.71,20.92 17.5,22.2 15,22.2 L15,22.2 Z"></path></svg><span class="articleheader-value">Артемий Мазаев</span></span><span class="articleheader-item"><svg class="icon" width="30px" height="30px" viewBox="0 0 30 30"><path class="icon-path" fill="#ccc" d="M14.99,5 C9.47,5 5,9.48 5,15 C5,20.52 9.47,25 14.99,25 C20.52,25 25,20.52 25,15 C25,9.48 20.52,5 14.99,5 L14.99,5 Z M15,23 C10.58,23 7,19.42 7,15 C7,10.58 10.58,7 15,7 C19.42,7 23,10.58 23,15 C23,19.42 19.42,23 15,23 Z M15.5,10 L14,10 L14,16 L19.25,19.15 L20,17.92 L15.5,15.25 L15.5,10 Z"></path></svg><span class="articleheader-value">6 мин. чтения</span></span></div></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Тематического моделирования прием машинного обучения без учителя для определения тем в коллекции документах. В чем отличие от обычной кластеризации? <strong>Цель кластеризации</strong> — разделить корпус документов на группы, то цель тематического моделирование — выделение основных тем из набора высказываний. Самое главное, что кластеризация <em>дедуктивна</em>, а тематическое моделирование - <em>индуктивно</em>.</p>
+<p>В этой серии статей мы сравним три метода тематического моделирования: <br>
+1. Латентное Размещение Дирихле (Latent Dirichlet Allocation, LDA)<br>
+2. Латентно-Сематический Анализ (Latent Sernantic Analysis, LSA)<br>
+3. Неотрицательно матричное разложение (Non-Negative Matrix Factorization, NNMF)</p>
+<h3>Латентное размещение Дирихле (LDA)</h3>
+<p>Данный метод тематического моделирования был предложен Дэвидом Блеем (David Blei), Эндрю Ыном (Andrew Ng) и Майклом Джорданом (Michael Jordan) в 2003 г. LDA принадлежит семейству порождающий вероятностных моделей, в которых темы представлены вероятностями появления каждого слова из заданного набора. Документы в свою очередь могут быть представлены как сочетания тем. Уникальная особенность моделей LDA состоит в том что темы не обязательно должны быть различными и слова могут встречаться в нескольких темах; это придает некоторую нечеткость определяемым темам, что может пригодиться для совладения с гибкостью языка.<br>
+<img alt="тематическое размещение" src="./Тематическое моделирование в действии. LDA_Lambda_files/topic_modeling_20190423083033790789.png"></p>
+<p>Блей (Blei) с коллегами (2003) установили, что распределение Дирихле, семейство непрерывных распределений (способ измерения группировки по распределениям), - это удобный способ выявления тем, присутствующих в корпусе, а также проявляющихся в разных сочетаниях в каждом документе в корпусе. Фактически, метод латентного размещения Дирихле (LDA, Latent Dirichlet Allocation) дает нам наблюдаемое слово или лексему, по которому можно попытаться определить вероятную тему, распределение слов в каждой теме и сочетание тем в документе.Чтобы задействовать методы тематического моделирования в приложении, нужно создать настраиваемый конвейер, который будет экстраполировать темы из неструктурированных текстовых данных, и способ сохранения лучшей модели.<br>
+Конвейер для тематического моделирования будет выглядеть так:<br>
+1. Загрузка корпуса<br>
+2. Пред обработка текста<br>
+    2.1 Удаление стоп слов<br>
+    2.2 Удаление пунктуации<br>
+2.3 Лемматизация слов<br>
+3. Создание словаря<br>
+4. Подбор оптимального количества тем</p>
+<h3>Реализация с gensim</h3>
+<p>Почему Gensim? Модели в Gensim имеют больше настраиваемых параметров чем в scikit-learn. Gensim изначально разрабатывалась как библиотека для тематического моделирования.<br>
+Для начала установим все необходимые библиотеки.<br>
+- <strong>gensim</strong> - содержит все алгоритмы тематического моделирования<br>
+- <strong>pandas</strong> - необходима для работы с корпусом языка<br>
+- <strong>nltk</strong> - содержит алгоритмы лемматизаций и словарь стоп слов<br>
+- <strong>pyLDAvis</strong> - плагин визуализации модели LDA<br>
+- <strong>matplotlib</strong> - библиотека визуализации</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="bash hljs">pip install gensim
+pip install pandas
+pip install nltk
+pip install pyLDAvis
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Загрузим наш корпус </p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+df = pd.read_csv(<span class="hljs-string">'data.csv'</span>, sep=<span class="hljs-string">','</span>)
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Посмотрим, успешно ли загрузился наш корпус<br>
+<img alt="корпус" src="./Тематическое моделирование в действии. LDA_Lambda_files/dfhead_20190423090300424790.png"><br>
+Как видно, корпус успешно загрузился. Теперь настал самый важный этап обработки данных, от него зависит 80% успеха. Это препроцессинг, пред обработка текста, в него входит большое количество функций, но мы рассмотрим основные функции.<br>
+Для начала скачаем стоп слова.</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-keyword">import</span> nltk
+nltk.download(<span class="hljs-string">"stopwords"</span>)
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Теперь можно перейти к написанию функции обработки текста. Ядром нашего препроцессинга будет стэминг реализованный в SnowballStemmer.<br>
+<strong>Стeмминг</strong> — это процесс нахождения основы слова для заданного исходного слова. Основа слова не обязательно совпадает с морфологическим корнем слова</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-keyword">from</span> nltk.corpus <span class="hljs-keyword">import</span> stopwords
+<span class="hljs-keyword">import</span> re, string
+<span class="hljs-keyword">from</span> nltk.stem.snowball <span class="hljs-keyword">import</span> SnowballStemmer
+
+russian_stopwords = stopwords.words(<span class="hljs-string">"russian"</span>)<span class="hljs-comment"># собираем стоп слова</span>
+regex = re.compile(<span class="hljs-string">'[%s]'</span> % re.escape(string.punctuation)) <span class="hljs-comment"># компилим regexp выражение</span>
+stemmer = SnowballStemmer(<span class="hljs-string">"russian"</span>) <span class="hljs-comment"># инициализируем стэмминг</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">preprocessing</span><span class="hljs-params">(text)</span>:</span>
+    text = regex.sub(<span class="hljs-string">''</span>, text) <span class="hljs-comment"># удаляем пунктуацию</span>
+    text = [token <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> text.split() <span class="hljs-keyword">if</span> token <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> russian_stopwords] <span class="hljs-comment"># Удаляем стоп слова</span>
+    text = [stemmer.stem(token) <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> text] <span class="hljs-comment"># Выполняем стэмминг</span>
+    text = [token <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> text <span class="hljs-keyword">if</span> token] <span class="hljs-comment"># Удаляем пустые токены</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">' '</span>.join(text)
+
+<span class="hljs-comment"># Пробуем  вызвать  и посмотреть на результат</span>
+preprocessing(<span class="hljs-string">"я вы он и мы, футбол, пиво, люблю !"</span>)
+<span class="hljs-comment"># Результат</span>
+<span class="hljs-comment"># 'футбол пив любл'</span>
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Теперь выполним препроцессинг для всего корпуса.</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs">df[<span class="hljs-string">'text'</span>] = df[<span class="hljs-string">'text'</span>].apply(<span class="hljs-keyword">lambda</span> x: preprocessing(x))
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Для улучшения выделения тематик, необходимо выделить <strong>коллокации</strong>.<br>
+<strong>Коллокация</strong> - словосочетание, имеющее признаки синтаксически и семантически целостной единицы, в котором выбор одного из компонентов осуществляется по смыслу, а выбор второго зависит от выбора первого (например, ставить условия — выбор глагола ставить определяется традицией и зависит от существительного условия, при слове предложение будет другой глагол — вносить). Коллокация представляет собой обычную <strong>N-грамму</strong>.</p>
+<p><strong>N-грамма</strong> — последовательность из n элементов. С семантической точки зрения, это может быть последовательность звуков, слогов, слов или букв. На практике чаще   встречается N-грамма как ряд слов, устойчивые словосочетания</p>
+<p>Алгоритм выделение коллокаций уже реализованно в библиотеке Gensim, но он начинает работать если обучить его на достаточно большом корпусе. Но для этого переведем наш корпус из коллекции документов, в коллекцию документов — токенов.</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs">text_clean= []
+<span class="hljs-keyword">for</span> index, row <span class="hljs-keyword">in</span> df.iterrows():
+        text_clean.append(row[<span class="hljs-string">'text'</span>].split())
+
+<span class="hljs-keyword">from</span> gensim.models <span class="hljs-keyword">import</span> Phrases
+bigram = Phrases(text_clean) <span class="hljs-comment"># Создаем биграммы на основе корпуса</span>
+trigram = Phrases(bigram[text_clean])<span class="hljs-comment"># Создаем триграммы на основе корпуса</span>
+
+<span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> range(len(text_clean)):
+    <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> bigram[text_clean[idx]]:
+        <span class="hljs-keyword">if</span> <span class="hljs-string">'_'</span> <span class="hljs-keyword">in</span> token:
+            <span class="hljs-comment"># Токен это би грамма, добавим в документ.</span>
+            text_clean[idx].append(token)
+    <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> trigram[text_clean[idx]]:
+        <span class="hljs-keyword">if</span> <span class="hljs-string">'_'</span> <span class="hljs-keyword">in</span> token:
+			<span class="hljs-comment"># Токен это три грамма, добавим в документ.</span>
+			text_clean[idx].append(token)
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Теперь в нашем корпусе есть устойчивые выражения, и они не будут рассмотрены как отдельные слова, тем самым мы повысили устойчивость корпуса.<br>
+Для обучения LDA модели осталось выполнить всего лишь один шаг, преобразовать наш корпус в словарь частот.</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-keyword">from</span> gensim.corpora.dictionary <span class="hljs-keyword">import</span> Dictionary
+<span class="hljs-keyword">from</span> numpy <span class="hljs-keyword">import</span> array
+dictionary = Dictionary(text_clean)
+dictionary.filter_extremes(no_below=<span class="hljs-number">10</span>, no_above=<span class="hljs-number">0.1</span>)
+<span class="hljs-comment">#Создадим словарь и корпус для lda модели</span>
+corpus = [dictionary.doc2bow(doc) <span class="hljs-keyword">for</span> doc <span class="hljs-keyword">in</span> text_clean]
+print(<span class="hljs-string">'Количество уникальных токенов: %d'</span> % len(dictionary))
+print(<span class="hljs-string">'Количество документов: %d'</span> % len(corpus))
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>После создания словаря частот, можно перейти к созданию LDA модели. Установим гиперпараметр <strong>num_topics</strong> равным 2 (далее я объясню как можно подобрать оптимальное количество тем). И сразу посмотрим какие группы тематик выявила модель LDA.</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-keyword">from</span> gensim.models.ldamulticore <span class="hljs-keyword">import</span> LdaMulticore
+model=LdaMulticore(corpus=corpus,id2word=dictionary, num_topics=<span class="hljs-number">2</span>)
+model.show_topics()
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Текстом можно посмотреть и в графическом виде. В этом нам поможет <strong>pyLDAvis</strong></p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-keyword">import</span> pyLDAvis.gensim
+<span class="hljs-keyword">import</span> gensim
+pyLDAvis.enable_notebook()
+data = pyLDAvis.gensim.prepare(model, corpus, dictionary)
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p><img alt="кластеры тематик" src="./Тематическое моделирование в действии. LDA_Lambda_files/topic_cluster_20190423134742403276.png"></p>
+<p>Вы могли заметить, что классы не названы, а им просто присвоен номер.<br>
+Уже наверняка задались вопросом, а как можно присвоить название классу?<br>
+Есть два простых варианта.<br>
+1. Можно вывести ключевые слова и по ключевым словам подобрать название темы <strong>model.show_topics()</strong><br>
+2. Сделать прогноз на документах, и на основании анализа предсказанных классов текста.</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Ну а теперь давайте разберемся, как подобрать самый важный параметр — количество тем. Но с начала введем понятие Когерентности. Тема называется когерентной (согласованной), если термины, наиболее частые в данной теме, неслучайно часто совместно встречаются рядом в документах коллекции. Когерентность может оцениваться по сторонней коллекции (например, по Википедии), либо по той же коллекции, по которой строится модель. Для оценивания когерентности использовалась поточечная взаимная информация (pointwise mutual information, PMI). В коде куда все проще.</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">compute_coherence_values</span><span class="hljs-params">(dictionary, corpus, texts, limit, start=<span class="hljs-number">2</span>, step=<span class="hljs-number">3</span>)</span>:</span>
+    <span class="hljs-string">"""
+	Подсчет c_v когерентности для различного количества тем
+	dictionary : Gensim словарь
+	corpus : Gensim корпус
+	texts : Список текста
+	limit : Максимальное количество тем
+	
+	model_list : Список LDA моделей
+	coherence_values :Когерентности, соответствующие модели LDA с количеством тем
+    """</span>
+    coherence_values = []
+    model_list = []
+    <span class="hljs-keyword">for</span> num_topics <span class="hljs-keyword">in</span> range(start, limit, step):
+        model=LdaMulticore(corpus=corpus,id2word=dictionary, num_topics=num_topics)
+        model_list.append(model)
+        coherencemodel = CoherenceModel(model=model, texts=texts, dictionary=dictionary, coherence=<span class="hljs-string">'c_v'</span>)
+        coherence_values.append(coherencemodel.get_coherence())
+    <span class="hljs-keyword">return</span> model_list, coherence_values
+	
+<span class="hljs-comment"># Вызовем функцию и посчитаем</span>
+model_list, coherence_values = compute_coherence_values(dictionary=dictionary, corpus=corpus, texts=text_clean, start=<span class="hljs-number">2</span>, limit=<span class="hljs-number">40</span>, step=<span class="hljs-number">2</span>)
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Для понимания согласованности визуализируем как количество тем влияют на согласованность, создадим график при помощи matplotlib.</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+limit=<span class="hljs-number">40</span>; start=<span class="hljs-number">2</span>; step=<span class="hljs-number">2</span>;
+x = range(start, limit, step)
+plt.plot(x, coherence_values)
+plt.xlabel(<span class="hljs-string">"Количество тем"</span>)
+plt.ylabel(<span class="hljs-string">"Согласованность"</span>)
+plt.legend((<span class="hljs-string">"coherence_values"</span>), loc=<span class="hljs-string">'best'</span>)
+plt.show()
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p><img alt="" src="./Тематическое моделирование в действии. LDA_Lambda_files/cohorence_20190423141045902338.png"><br>
+После нахождения наилучшей модели, с самой большой согласованность, сохраним ее и все сопутствующие к ней данные:<br>
+- Словарь,<br>
+- Корпус<br>
+- Устойчивые выражения</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-comment"># Сохраняем модель</span>
+model_list[<span class="hljs-number">33</span>].save(<span class="hljs-string">'model/best_model.lda'</span>)
+<span class="hljs-comment"># Сохраняем словарь</span>
+<span class="hljs-keyword">from</span> gensim <span class="hljs-keyword">import</span> corpora
+corpora.Dictionary.save(dictionary, <span class="hljs-string">"model/dictionary.dict"</span>)
+<span class="hljs-comment"># Сохраняем корпус</span>
+corpora.BleiCorpus.save_corpus(fname=<span class="hljs-string">"model/corpus.lda-c"</span>,corpus= corpus)
+<span class="hljs-comment"># Сохраняем выражения </span>
+bigram.save(<span class="hljs-string">'./model/bigram.phs'</span>)
+trigram.save(<span class="hljs-string">'./model/trigram.phs'</span>)
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Сохраним все данные, можно перейти к созданию продакшн версии модели.</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LdaPredictor</span><span class="hljs-params">()</span>:</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, lda_path, dict_path, bigram_path, trigram_path)</span>:</span>
+        <span class="hljs-string">"""
+        lda_path - путь к lda модели
+        dict_path - путь к словарю 
+        bigram_path - путь к биграммам
+        trigram_path - путь к триграммам
+        
+        param: lda_path str
+        param: dict_path str
+        param: bigram_path str
+        param: trigram_path str
+        """</span>
+        self.dictionary = corpora.Dictionary.load(dict_path)
+        self.lda = LdaMulticore.load(lda_path)
+        self.bigram_path = bigram_path
+        self.trigram_path = trigram_path
+        
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">clean</span><span class="hljs-params">(self, text)</span>:</span>
+        text = regex.sub(<span class="hljs-string">''</span>, text) 
+        text = [token <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> text.split() <span class="hljs-keyword">if</span> token <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> russian_stopwords]
+        text = [stemmer.stem(token) <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> text]
+        text = [token <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> text <span class="hljs-keyword">if</span> token]
+        <span class="hljs-keyword">return</span> <span class="hljs-string">' '</span>.join(text)
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bigram</span><span class="hljs-params">(self, text)</span>:</span>
+        bigram = Phrases.load(self.bigram_path)
+        trigram = Phrases.load(self.trigram_path)
+        text_clean = text
+        <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> range(len(text_clean)):
+            <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> bigram[text_clean[idx]]:
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'_'</span> <span class="hljs-keyword">in</span> token:
+                    text_clean[idx].append(token)
+            <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> trigram[text_clean[idx]]:
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'_'</span> <span class="hljs-keyword">in</span> token:
+                    text_clean[idx].append(token)
+        <span class="hljs-keyword">return</span> text_clean
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">predict</span><span class="hljs-params">(self, text)</span>:</span>
+        clean_text = self.clean(text).split()
+        bigram = self.bigram([clean_text])
+        new_review_bow = self.dictionary.doc2bow(bigram[<span class="hljs-number">0</span>])
+        new_review_lda = self.lda[new_review_bow]
+        <span class="hljs-keyword">return</span> sorted(new_review_lda, reverse=<span class="hljs-keyword">True</span>, key=operator.itemgetter(<span class="hljs-number">1</span>))
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>После создания продакшн модели, идеализируем ее и сделаем первую классификацию</p></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_code"><pre><code class="python hljs">lda_path = <span class="hljs-string">"./model/best_model.lda"</span>
+dict_path = <span class="hljs-string">"./model/dictionary.dict"</span>
+bigram_path = <span class="hljs-string">"./model/bigram.phs"</span>
+trigram_path = <span class="hljs-string">"./model/trigram.phs"</span>
+lda = LdaPredictor(lda_path, dict_path,  bigram_path, trigram_path)
+text = <span class="hljs-string">"Текст с первой кларификацией"</span>
+predict = lda.predict(text)
+print(predict)
+<span class="hljs-comment"># Предсказанные классы</span>
+<span class="hljs-comment"># [(16, 0.5016654), </span>
+<span class="hljs-comment"># (31, 0.5016663)]</span>
+</code></pre></div></div><div class="articlecontent-main"><div class="articlecontent articlecontent_text"><p>Это все что нужно для нахождения и вывода наилучшей модели для тематического моделирования</p></div></div><div class="articlefooter"><div class="articlefooter-top"><div class="articlefooter-item"><div class="articlefooter-author"><picture><source srcset="https://lambda-it.ru/media/team/member/artemii_mazaev/Mazaew_Artemiy_thumbnail_64x64.png"><img src="./Тематическое моделирование в действии. LDA_Lambda_files/Mazaew_Artemiy_thumbnail_64x64.wep" alt="Артемий Мазаев"></picture><div class="articlefooter-info"><div class="articlefooter-name">Артемий Мазаев</div><div class="articlefooter-position">Лектор/Руководитель проектов</div></div></div></div><div class="articlefooter-item" style="justify-content: center;"></div><div class="articlefooter-item"><button class="button button_type_ghost button_icon_align_right"><svg class="icon" width="30px" height="30px" viewBox="0 0 30 30"><path class="icon-path" fill="#4c4c4c" d="M7 15 8.41 16.41 14 10.83 14 23 16 23 16 10.83 21.58 16.42 23 15 15 7z"></path></svg><span class="button-text">Наверх</span></button></div></div><div class="articlefooter-bottom"><div class="articlefooter-tags"><button class="button button_type_label"><span class="button-text">ml</span></button><button class="button button_type_label"><span class="button-text">lda</span></button><button class="button button_type_label"><span class="button-text">nlp</span></button></div><div class="articlefooter-share"><span class="articlefooter-social"><div role="button" tabindex="0" class="SocialMediaShareButton SocialMediaShareButton--vk"><svg class="icon" width="30px" height="30px" viewBox="0 0 24 24"><path class="icon-path" fill="#4c4c4c" d="M11.701 18.771h1.437s.433-.047.654-.284c.21-.221.21-.63.21-.63s-.031-1.927.869-2.21c.887-.281 2.012 1.86 3.211 2.683.916.629 1.605.494 1.605.494l3.211-.044s1.682-.105.887-1.426c-.061-.105-.451-.975-2.371-2.76-2.012-1.861-1.742-1.561.676-4.787 1.469-1.965 2.07-3.166 1.875-3.676-.166-.48-1.26-.361-1.26-.361l-3.602.031s-.27-.031-.465.09c-.195.119-.314.391-.314.391s-.572 1.529-1.336 2.82c-1.623 2.729-2.268 2.879-2.523 2.699-.604-.391-.449-1.58-.449-2.432 0-2.641.404-3.75-.781-4.035-.39-.091-.681-.15-1.685-.166-1.29-.014-2.378.01-2.995.311-.405.203-.72.652-.539.675.24.03.779.146 1.064.537.375.506.359 1.636.359 1.636s.211 3.116-.494 3.503c-.495.262-1.155-.28-2.595-2.756-.735-1.26-1.291-2.67-1.291-2.67s-.105-.256-.299-.406c-.227-.165-.557-.225-.557-.225l-3.435.03s-.51.016-.689.24c-.166.195-.016.615-.016.615s2.686 6.287 5.732 9.453c2.79 2.902 5.956 2.715 5.956 2.715l-.05-.055z"></path></svg></div></span><span class="articlefooter-count"><div class="SocialMediaShareCount"><span>0</span></div></span><span class="articlefooter-social"><div role="button" tabindex="0" class="SocialMediaShareButton SocialMediaShareButton--facebook"><svg class="icon" width="30px" height="30px" viewBox="0 0 30 30"><path class="icon-path" fill="#4c4c4c" d="M16.8416357,24 L16.8416357,15.7891078 L19.4981413,15.7891078 L19.8929368,12.5909618 L16.8416357,12.5909618 L16.8416357,10.5469293 C16.8416357,9.62224797 17.0892193,8.98957126 18.3672862,8.98957126 L20,8.98957126 L20,6.12514484 C19.7189591,6.0834299 18.7486989,6 17.6245353,6 C15.269145,6 13.663197,7.49478563 13.663197,10.2340672 L13.663197,12.5979143 L11,12.5979143 L11,15.7960603 L13.663197,15.7960603 L13.663197,24 L16.8416357,24 Z"></path></svg></div></span><span class="articlefooter-count"><div class="SocialMediaShareCount"><span>0</span></div></span><span class="articlefooter-social"><div role="button" tabindex="0" class="SocialMediaShareButton SocialMediaShareButton--twitter"><svg class="icon" width="30px" height="30px" viewBox="0 0 24 24"><path class="icon-path" fill="#4c4c4c" d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg></div></span></div></div></div></div></div><div class="footer"><div class="footer-list"><div class="footer-wrapper"><div class="footer-copyright"><svg x="0" y="0" width="64" height="64" viewBox="0, 0, 1500, 1500"><defs><lineargradient id="Gradient_1" gradientUnits="userSpaceOnUse" x1="392.27" y1="523.008" x2="-113.709" y2="1382.965" gradientTransform="matrix(0.866, -0.5, 0.5, 0.866, 0, 0)"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"></stop><stop offset="0.33" stop-color="#00E9FF"></stop></lineargradient><lineargradient id="Gradient_2" gradientUnits="userSpaceOnUse" x1="410.259" y1="514.432" x2="-113.609" y2="1388.951" gradientTransform="matrix(0.866, -0.5, 0.5, 0.866, 0, 0)"><stop offset="0.736" stop-color="#FF00D2"></stop><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"></stop></lineargradient></defs><g id="Layer_2"><path d="M685.935,282.165 L692.107,292.855 L1207.629,1185.764 L1226.144,1217.833 L920.09,1217.833 L913.918,1207.143 L742.784,910.73 L571.649,1207.143 L565.477,1217.833 L259.423,1217.833 L277.939,1185.764 L589.757,645.679 L398.397,314.235 L379.882,282.165 L685.935,282.165 z M661.248,324.925 L453.944,324.925 L632.96,634.989 L639.132,645.679 L632.96,656.369 L333.486,1175.073 L540.79,1175.073 L724.268,857.28 L742.784,825.21 L761.299,857.28 L944.777,1175.073 L1152.081,1175.073 L661.248,324.925 z" fill="url(#Gradient_1)"></path><path d="M735.07,282.166 L741.242,292.856 L1256.763,1185.765 L1275.279,1217.835 L969.224,1217.835 L963.052,1207.145 L791.918,910.731 L620.784,1207.145 L614.612,1217.835 L308.558,1217.835 L327.073,1185.765 L638.891,645.681 L447.532,314.236 L429.016,282.166 L735.07,282.166 z M710.382,324.926 L503.078,324.926 L682.094,634.991 L688.266,645.681 L682.094,656.371 L382.62,1175.075 L589.924,1175.075 L773.403,857.281 L791.918,825.211 L810.434,857.281 L993.912,1175.075 L1201.216,1175.075 L710.382,324.926 z" fill="url(#Gradient_2)"></path></g></svg><span>Privacy Policy</span><span>© 2019 Lambda </span></div><div class="footer-navigation"><span>Навигация</span><ul><li><a href="https://lambda-it.ru/">Главная</a></li><li><a href="https://lambda-it.ru/">Публикации</a></li><li><a href="https://lambda-it.ru/about">О нас</a></li></ul></div><div class="footer-contacts"><span>Контакты</span><div class="footer-phone"><a href="tel:+7 (495) 055-28-96">+7 (495) 055-28-96</a><a href="mailto:info@lambda-it.ru">info@lambda-it.ru</a></div><hr><div class="footer-socials"><a target="blank" href="https://vk.com/lambdamai"><svg class="icon" width="30px" height="30px" viewBox="0 0 24 24"><path class="icon-path" fill="#4c4c4c" d="M11.701 18.771h1.437s.433-.047.654-.284c.21-.221.21-.63.21-.63s-.031-1.927.869-2.21c.887-.281 2.012 1.86 3.211 2.683.916.629 1.605.494 1.605.494l3.211-.044s1.682-.105.887-1.426c-.061-.105-.451-.975-2.371-2.76-2.012-1.861-1.742-1.561.676-4.787 1.469-1.965 2.07-3.166 1.875-3.676-.166-.48-1.26-.361-1.26-.361l-3.602.031s-.27-.031-.465.09c-.195.119-.314.391-.314.391s-.572 1.529-1.336 2.82c-1.623 2.729-2.268 2.879-2.523 2.699-.604-.391-.449-1.58-.449-2.432 0-2.641.404-3.75-.781-4.035-.39-.091-.681-.15-1.685-.166-1.29-.014-2.378.01-2.995.311-.405.203-.72.652-.539.675.24.03.779.146 1.064.537.375.506.359 1.636.359 1.636s.211 3.116-.494 3.503c-.495.262-1.155-.28-2.595-2.756-.735-1.26-1.291-2.67-1.291-2.67s-.105-.256-.299-.406c-.227-.165-.557-.225-.557-.225l-3.435.03s-.51.016-.689.24c-.166.195-.016.615-.016.615s2.686 6.287 5.732 9.453c2.79 2.902 5.956 2.715 5.956 2.715l-.05-.055z"></path></svg></a><a target="blank" href="https://www.instagram.com/lambda_mai/"><svg class="icon" width="30px" height="30px" viewBox="0 0 24 24"><path class="icon-path" fill="#4c4c4c" d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"></path></svg></a><a target="blank" href="https://github.com/lambdamai/"><svg class="icon" width="30px" height="30px" viewBox="0 0 24 24"><path class="icon-path" fill="#4c4c4c" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg></a><a target="blank" href="https://twitter.com/lambda_mai"><svg class="icon" width="30px" height="30px" viewBox="0 0 24 24"><path class="icon-path" fill="#4c4c4c" d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg></a></div></div></div></div></div></div></div>
+<script src="./Тематическое моделирование в действии. LDA_Lambda_files/share.php"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/runtime.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.highlight.js.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.core-js.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-share.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.history.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.babel-runtime.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-redux.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-router-dom.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-preloader-icon.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-router.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.lodash-es.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.redux.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-router-redux.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.bem-react.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-dom.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.stepperjs.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.webpack.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.deep-equal.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.prop-types.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-helmet.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.debug.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.fbjs.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.path-to-regexp.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-highlight.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.symbol-observable.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.bem.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.assert.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.bezier-easing.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.classnames.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.css-loader.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.eventemitter3.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.exenv.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.hoist-non-react-statics.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.inherits.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.invariant.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.isomorphic-fetch.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.jsonp.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.ms.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.object-assign.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.performance-now.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.process.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.raf.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.react-side-effect.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.redux-devtools-extension.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.redux-logger.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.redux-thunk.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.resolve-pathname.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.shallowequal.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.url-search-params-polyfill.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.value-equal.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/npm.whatwg-fetch.44689f56ea72c199517f.js.Без названия"></script><script type="text/javascript" src="./Тематическое моделирование в действии. LDA_Lambda_files/app.44689f56ea72c199517f.js.Без названия"></script>
+
+<div class="mallbery-caa" style="z-index: 2147483647 !important; text-transform: none !important; position: fixed;"></div><div class="mallbery-caa" style="z-index: 2147483647 !important; text-transform: none !important; position: fixed;"></div></body></html>

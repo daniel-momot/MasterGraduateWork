@@ -1,0 +1,2 @@
+.only-en {display: none !important;}
+.link-en:after {content:' (en)'; color:black; position: relative; top: -.3em; font-size: 80%; color: #d0d0d0;}
